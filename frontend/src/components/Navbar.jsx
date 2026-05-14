@@ -1,3 +1,8 @@
+import Button from './Button';        // or wherever your Button component is
+// or if it's from a UI library:
+import { Button } from './ui/button'; // shadcn/ui style
+// or
+import Button from '@mui/material/Button'; // if using Material-UI
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Instagram as InstagramIcon, Menu, X } from "lucide-react";
