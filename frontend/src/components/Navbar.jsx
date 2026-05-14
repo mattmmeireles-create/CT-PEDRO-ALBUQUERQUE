@@ -77,14 +77,21 @@ export const Navbar = () => {
             <InstagramIcon className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2.2} />
           </a>
           <Button
-            onClick={() => scrollToId("cta")}
-            data-testid="nav-cta-button"
-            className="bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-semibold rounded-none px-3 sm:px-4 md:px-6 h-9 sm:h-10 md:h-11 tracking-wide uppercase text-[11px] sm:text-xs md:text-sm border-0"
-          >
-            <span className="hidden sm:inline">Aula Grátis</span>
-            <span className="sm:hidden">Grátis</span>
-          </Button>
-          <button
+            <a
+  <Button
+  asChild
+  data-testid="nav-cta-button"
+  className="bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-semibold rounded-none px-3 sm:px-4 md:px-6 h-9 sm:h-10 md:h-11 tracking-wide uppercase text-[11px] sm:text-xs md:text-sm border-0"
+>
+  <a
+    href="https://wa.me/5521982478764?text=Olá!%20Gostaria%20de%20agendar%20uma%20aula%20gr%C3%A1tis."
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span className="hidden sm:inline">Aula Grátis</span>
+    <span className="sm:hidden">Grátis</span>
+  </a>
+</Button>
             onClick={() => setMenuOpen((v) => !v)}
             data-testid="nav-mobile-toggle"
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
