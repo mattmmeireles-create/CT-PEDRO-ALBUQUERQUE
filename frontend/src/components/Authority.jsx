@@ -72,7 +72,7 @@ export const Authority = () => {
             <p className="text-base md:text-lg text-white/55 leading-relaxed max-w-xl">
               Nós não só vivemos a academia nós vivemos a transformação. Aqui o
               treinamento é levado a sério, e cada detalhe — do tatame ao coach
-              — foi construído para forjar atletas e mentes resilientes.
+              foi construído para forjar atletas e mentes resilientes.
             </p>
           </div>
         </div>
@@ -103,7 +103,7 @@ export const Authority = () => {
                 Oferta limitada
               </div>
               <h3 className="font-display uppercase text-3xl md:text-4xl text-white leading-tight tracking-tight">
-                7 dias. Sem custo.
+                Sem custo.
                 <br />
                 <span className="text-white/50">Sem desculpa.</span>
               </h3>
