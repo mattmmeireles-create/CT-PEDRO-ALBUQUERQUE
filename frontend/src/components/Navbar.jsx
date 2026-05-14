@@ -112,7 +112,7 @@ export const Navbar = () => {
             <button
               key={item.id}
               onClick={() => scrollToId(item.id)}
-              className="text-left py-3 text-white/80 hover:text-white text-sm uppercase tracking-[0.18em] border-b border-white/5 last:border-0 flex items-center justify-between"
+              className="text-left py-3 text-white/80 hover:text-white text-sm uppercase tracking-[0.15em] border-b border-white/5 last:border-0 flex items-center justify-between"
             >
               {item.label}
               <span className="text-[var(--brand-accent)] text-xs">→</span>

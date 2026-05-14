@@ -96,7 +96,7 @@ export const Hero = () => {
                 }
                 className="group bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-bold uppercase tracking-[0.15em] text-sm md:text-base rounded-none h-14 px-8 border-0 shadow-[0_0_0_0_rgba(255,23,68,0)] hover:shadow-[0_0_40px_-5px_rgba(255,23,68,0.6)] transition-all"
               >
-                Ganhar 1 Semana Grátis
+                Ganhar 1 aula Grátis
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
 
@@ -115,7 +115,7 @@ export const Hero = () => {
                   ))}
                 </div>
                 <span>
-                  <span className="text-white font-semibold">+1.200</span>{" "}
+                  <span className="text-white font-semibold">+150</span>{" "}
                   alunos ativos
                 </span>
               </div>
@@ -133,8 +133,8 @@ export const Hero = () => {
             <div className="relative">
               {/* Big number stack */}
               <div className="border-l-2 border-[var(--brand-accent)] pl-6 space-y-8">
-                <Stat number="07" label="Anos forjando atletas reais" />
-                <Stat number="18" label="Coaches certificados" />
+                <Stat number="10" label="Anos forjando atletas reais" />
+                <Stat number="05" label="Coaches certificados" />
                 <Stat number="800" label="Cal/sessão em alta intensidade" />
               </div>
             </div>

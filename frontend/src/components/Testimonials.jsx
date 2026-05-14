@@ -48,7 +48,7 @@ const testimonials = [
     initial: "D",
     color: "#FB8C00",
     date: "há 1 semana",
-    rating: 4,
+    rating: 5,
     text: "Estrutura excelente, equipamentos novos e bem conservados. Único ponto: horário lotado no fim do dia. Vale a pena chegar mais cedo.",
   },
   {
