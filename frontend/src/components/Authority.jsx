@@ -70,7 +70,7 @@ export const Authority = () => {
           </div>
           <div className="lg:col-span-6 lg:col-start-7 flex items-end">
             <p className="text-base md:text-lg text-white/55 leading-relaxed max-w-xl">
-              Nós não vendemos academia. Vendemos transformação. Aqui o
+              Nós não só vivemos a academia nós vivemos a transformação. Aqui o
               treinamento é levado a sério, e cada detalhe — do tatame ao coach
               — foi construído para forjar atletas e mentes resilientes.
             </p>
