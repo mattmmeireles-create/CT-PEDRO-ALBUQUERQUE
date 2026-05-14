@@ -50,6 +50,13 @@ export const Navbar = () => {
           >
             Autoridade
           </button>
+          <button
+            onClick={() => scrollToId("depoimentos")}
+            className="hover:text-white transition-colors"
+            data-testid="nav-testimonials"
+          >
+            Depoimentos
+          </button>
         </nav>
 
         <Button

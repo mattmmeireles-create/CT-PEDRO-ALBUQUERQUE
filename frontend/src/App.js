@@ -4,6 +4,7 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Modalities } from "./components/Modalities";
 import { Authority } from "./components/Authority";
+import { Testimonials } from "./components/Testimonials";
 import { WhatsappFloat } from "./components/WhatsappFloat";
 import { Footer } from "./components/Footer";
 
@@ -15,6 +16,7 @@ const Landing = () => {
         <Hero />
         <Modalities />
         <Authority />
+        <Testimonials />
       </main>
       <Footer />
       <WhatsappFloat />
