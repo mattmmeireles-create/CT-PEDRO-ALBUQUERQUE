@@ -8,15 +8,15 @@ const pillars = [
     title: "Ambiente Blindado",
     subtitle: "Sem Ego",
     description:
-      "Comunidade selecionada, zero tolerância à arrogância. Aqui você treina com respeito, foco e segurança — do iniciante ao avançado.",
+      "Comunidade selecionada, zero tolerância à arrogância. Aqui você treina com respeito, foco e segurança, do iniciante ao avançado.",
     tag: "Cultura",
   },
   {
     icon: Cog,
     title: "Metodologia Própria",
-    subtitle: "Sistema VNG",
+    subtitle: "Doutrina no DNA",
     description:
-      "Sete anos refinando uma progressão técnica que combina fundamentos clássicos, condicionamento moderno e mentalidade de competição.",
+      "Dez anos refinando uma progressão técnica que combina fundamentos clássicos, condicionamento moderno e mentalidade de competição.",
     tag: "Método",
   },
   {
@@ -65,14 +65,14 @@ export const Authority = () => {
             <h2 className="font-display uppercase text-4xl md:text-5xl lg:text-6xl text-white leading-[0.95] tracking-tight">
               Por que treinar
               <br />
-              <span className="text-white/40">no CT Pedro Albuquerque.</span>
+              <span className="text-white/40">no CT Pedro Albuquerque?.</span>
             </h2>
           </div>
           <div className="lg:col-span-6 lg:col-start-7 flex items-end">
             <p className="text-base md:text-lg text-white/55 leading-relaxed max-w-xl">
-              Nós não vendemos academia. Vendemos transformação. Aqui o
-              treinamento é levado a sério, e cada detalhe — do tatame ao coach
-              — foi construído para forjar atletas e mentes resilientes.
+              Nós não vivemos só a academia, vendemos também a transformação. Aqui o
+              treinamento é levado a sério, e cada detalhe, do tatame ao coach
+              foi construído para forjar atletas e mentes resilientes.
             </p>
           </div>
         </div>
@@ -120,7 +120,7 @@ export const Authority = () => {
               }
               className="bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-bold uppercase tracking-[0.15em] text-sm md:text-base rounded-none h-14 px-8 border-0 transition-all hover:shadow-[0_0_40px_-5px_rgba(255,23,68,0.6)]"
             >
-              Ganhar 1 Semana Grátis
+              Ganhar 1 aula Grátis
             </Button>
           </div>
         </div>
