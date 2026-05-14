@@ -20,6 +20,7 @@ export default function useReveal(options = {}) {
     );
     obs.observe(el);
     return () => obs.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { ref, visible };

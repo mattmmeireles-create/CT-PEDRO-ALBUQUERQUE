@@ -17,8 +17,8 @@ const Landing = () => {
         <Hero />
         <Modalities />
         <Authority />
-        <Testimonials />
         <Instagram />
+        <Testimonials />
       </main>
       <Footer />
       <WhatsappFloat />

@@ -57,6 +57,9 @@ export const Navbar = () => {
           <button onClick={() => scrollToId("autoridade")} className="hover:text-white transition-colors" data-testid="nav-authority">
             Autoridade
           </button>
+          <button onClick={() => scrollToId("instagram")} className="hover:text-white transition-colors" data-testid="nav-instagram-link">
+            Instagram
+          </button>
           <button onClick={() => scrollToId("depoimentos")} className="hover:text-white transition-colors" data-testid="nav-testimonials">
             Depoimentos
           </button>
@@ -103,8 +106,8 @@ export const Navbar = () => {
           {[
             { id: "modalidades", label: "Modalidades" },
             { id: "autoridade", label: "Autoridade" },
-            { id: "depoimentos", label: "Depoimentos" },
             { id: "instagram", label: "Instagram" },
+            { id: "depoimentos", label: "Depoimentos" },
           ].map((item) => (
             <button
               key={item.id}
