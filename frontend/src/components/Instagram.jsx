@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Instagram as InstagramIcon, ArrowUpRight } from "lucide-react";
 import { Button } from "./ui/button";
 import useReveal from "../hooks/useReveal";
@@ -6,8 +6,8 @@ import useReveal from "../hooks/useReveal";
 export const INSTAGRAM_URL = "https://www.instagram.com/ctpedroalbuquerque";
 export const INSTAGRAM_HANDLE = "@ctpedroalbuquerque";
 
-// Imagem real direta via HTTPS sem proxy para garantir o funcionamento imediato na tela
-const REAL_IMAGE_URL = "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop&q=80";
+// Imagem estática simulando o Story do dia (Card 1)
+const STORY_IMAGE_MOCK = "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop&q=80";
 
 const fallbackTiles = [
   { 
@@ -15,14 +15,45 @@ const fallbackTiles = [
     subtitle: "Assista Agora", 
     gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", 
     pattern: "diagonal",
-    instagramImage: REAL_IMAGE_URL, // Injeta a imagem direto aqui para não falhar
-    isStory: true 
+    instagramImage: STORY_IMAGE_MOCK,
+    isStory: true,
+    link: `${INSTAGRAM_URL}/stories` // Vai para os stories gerais ativos nas últimas 24h
   },
-  { label: "Bastidor", subtitle: "Muay Thai · Kids", gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", pattern: "dots" },
-  { label: "Dica do Coach", subtitle: "Técnica · Postura", gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)", pattern: "stripes" },
-  { label: "Reels", subtitle: "Kickboxing · Combo 3", gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)", pattern: "grid" },
-  { label: "Aluno em Foco", subtitle: "Antes & Depois", gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)", pattern: "diagonal" },
-  { label: "Eventos", subtitle: "Campeonato Interno", gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)", pattern: "stripes" },
+  { 
+    label: "Boxe", 
+    subtitle: "Ver Destaque", 
+    gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", 
+    pattern: "dots",
+    link: "https://www.instagram.com/stories/highlights/18163021822156721/"
+  },
+  { 
+    label: "Kickboxing", 
+    subtitle: "Ver Destaque", 
+    gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)", 
+    pattern: "stripes",
+    link: "https://www.instagram.com/stories/highlights/17998922896344326/"
+  },
+  { 
+    label: "Muay Thai", 
+    subtitle: "Ver Destaque", 
+    gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)", 
+    pattern: "grid",
+    link: "https://www.instagram.com/stories/highlights/17874789905399344/"
+  },
+  { 
+    label: "Treino Infantil", 
+    subtitle: "Ver Destaque", 
+    gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)", 
+    pattern: "diagonal",
+    link: "https://www.instagram.com/stories/highlights/18217137670074358/"
+  },
+  { 
+    label: "Aula Particular", 
+    subtitle: "Ver Destaque", 
+    gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)", 
+    pattern: "stripes",
+    link: "https://www.instagram.com/stories/highlights/17853664847565155/"
+  },
 ];
 
 const Patterns = {
@@ -34,13 +65,7 @@ const Patterns = {
 
 export const Instagram = () => {
   const { ref, visible } = useReveal();
-  const [tiles, setTiles] = useState(fallbackTiles);
-
-  useEffect(() => {
-    // Código de escuta limpo para futura integração de API
-    // Por enquanto ele mantém o estado inicial seguro que já vem com a imagem injetada
-    setTiles(fallbackTiles);
-  }, []);
+  const [tiles] = useState(fallbackTiles); // Removido o useEffect para travar a lista de links estática
 
   return (
     <section
@@ -143,12 +168,10 @@ export const Instagram = () => {
           style={{ transitionDelay: visible ? "200ms" : "0ms" }}
         >
           {tiles.map((t, idx) => {
-            const targetUrl = t.isStory ? `${INSTAGRAM_URL}/stories` : INSTAGRAM_URL;
-
             return (
               <a
                 key={idx}
-                href={targetUrl}
+                href={t.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid={`instagram-tile-${idx}`}
@@ -192,7 +215,7 @@ export const Instagram = () => {
 
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center z-30">
                   <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] md:text-xs uppercase tracking-[0.25em] text-white font-semibold flex items-center gap-1.5">
-                    {t.isStory ? "Ver Story" : "Ver no Insta"} <ArrowUpRight className="w-3.5 h-3.5" />
+                    {t.isStory ? "Ver Story" : "Ver Destaque"} <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
               </a>
