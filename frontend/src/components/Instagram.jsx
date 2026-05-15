@@ -27,33 +27,33 @@ export const Instagram = () => {
   const [tiles, setTiles] = useState(fallbackTiles);
 
   useEffect(() => {
-    fetch("/instagram-cache.json")
+    // Buscando direto de uma API aberta de teste para ver se funciona no seu navegador agora
+    fetch("https://corsproxy.io/?https://api.storiesig.info/api/profile/ctpedroalbuquerque")
       .then((res) => res.json())
       .then((data) => {
-        if (data) {
+        if (data && data.stories && data.stories.length > 0) {
+          // Pegamos o link da imagem original do story
+          const rawStoryUrl = data.stories[0].image_versions2.candidates[0].url;
+          
+          // PASSAMOS PELO PROXY IMAGES.WESERV.NL PARA O INSTAGRAM NÃO BLOQUEAR A IMAGEM!
+          const safeStoryUrl = `https://images.weserv.nl/?url=${encodeURIComponent(rawStoryUrl)}`;
+
           const updatedTiles = fallbackTiles.map((tile, idx) => {
-            // REGRA DA PRIMEIRA IMAGEM: Se for o card 0, tenta puxar especificamente o 'storyImage'
-            if (idx === 0 && data.storyImage) {
+            if (idx === 0) {
               return {
                 ...tile,
                 label: "Story Ativo",
                 subtitle: "Assista Agora",
-                instagramImage: data.storyImage,
-                isStory: true // Marcador para usarmos a borda gradiente do Instagram
+                instagramImage: safeStoryUrl,
+                isStory: true
               };
             }
-            
-            // Os outros cards (1 a 5) continuam puxando as fotos normais do Feed do array 'feedImages'
-            const feedImgUrl = data.feedImages?.[idx - 1]?.url || null;
-            return {
-              ...tile,
-              instagramImage: feedImgUrl
-            };
+            return tile;
           });
           setTiles(updatedTiles);
         }
       })
-      .catch((err) => console.log("Usando placeholders de segurança do Instagram:", err));
+      .catch((err) => console.log("Erro ao carregar dados externos do Insta:", err));
   }, []);
 
   return (
@@ -67,8 +67,7 @@ export const Instagram = () => {
         <div
           className="absolute inset-0"
           style={{
-            background:
-              "radial-gradient(ellipse at 80% 20%, rgba(255,23,68,0.12) 0%, rgba(0,0,0,0) 55%)",
+            background: "radial-gradient(ellipse at 80% 20%, rgba(255,23,68,0.12) 0%, rgba(0,0,0,0) 55%)",
           }}
         />
       </div>
@@ -158,10 +157,7 @@ export const Instagram = () => {
           style={{ transitionDelay: visible ? "200ms" : "0ms" }}
         >
           {tiles.map((t, idx) => {
-            // Se for o primeiro card e for um story ativo, manda direto pro link de stories da página
-            const targetUrl = t.isStory 
-              ? `${INSTAGRAM_URL}/stories` 
-              : INSTAGRAM_URL;
+            const targetUrl = t.isStory ? `${INSTAGRAM_URL}/stories` : INSTAGRAM_URL;
 
             return (
               <a
@@ -233,11 +229,7 @@ export const Instagram = () => {
             data-testid="instagram-follow-button"
             className="bg-gradient-to-tr from-[#F77737] via-[#E1306C] to-[#833AB4] hover:brightness-110 text-white font-bold uppercase tracking-[0.15em] text-xs md:text-sm rounded-none h-12 md:h-14 px-7 md:px-9 border-0 transition-all w-full sm:w-auto"
           >
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
               <InstagramIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" strokeWidth={2.2} />
               Seguir no Instagram
             </a>
