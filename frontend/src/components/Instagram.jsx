@@ -12,9 +12,9 @@ const fallbackTiles = [
     subtitle: "Assista Agora", 
     gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", 
     pattern: "diagonal",
-    instagramImage: "/kickboxing-story.jpg", // Imagem 1: Kickboxing
+    instagramImage: "https://images.unsplash.com/photo-1552072092-7f9b8d63efcb?q=80&w=600&auto=format&fit=crop", 
     isStory: true,
-    link: `${INSTAGRAM_URL}/stories`
+    link: "https://www.instagram.com/stories/ctpedroalbuquerque/"
   },
   { 
     label: "Boxe", 
