@@ -96,9 +96,17 @@ export const Hero = () => {
                 }
                 className="group bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-bold uppercase tracking-[0.15em] text-sm md:text-base rounded-none h-14 px-8 border-0 shadow-[0_0_0_0_rgba(255,23,68,0)] hover:shadow-[0_0_40px_-5px_rgba(255,23,68,0.6)] transition-all"
               >
-                Ganhar 1 aula Grátis
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+                <Button
+  data-testid="hero-cta-button"
+  onClick={() => {
+    const message = "Ola! Eu gostaria de conhecer e saber mais sobre a aula grátis";
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/5521982478764?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+  }}
+>
+  Ola! Eu gostaria de conhecer e saber mais sobre a aula grátis
+</Button>
 
               <div className="flex items-center gap-3 text-white/50 text-xs md:text-sm">
                 <div className="flex -space-x-2">
