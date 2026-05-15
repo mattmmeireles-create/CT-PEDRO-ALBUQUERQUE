@@ -6,8 +6,8 @@ import useReveal from "../hooks/useReveal";
 export const INSTAGRAM_URL = "https://www.instagram.com/ctpedroalbuquerque";
 export const INSTAGRAM_HANDLE = "@ctpedroalbuquerque";
 
-// Imagem real e limpa para simular o Story ativo e testar o clique imediato
-const STORY_IMAGE_MOCK = "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=500&auto=format&fit=crop&q=80";
+// Imagem real direta via HTTPS sem proxy para garantir o funcionamento imediato na tela
+const REAL_IMAGE_URL = "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop&q=80";
 
 const fallbackTiles = [
   { 
@@ -15,7 +15,7 @@ const fallbackTiles = [
     subtitle: "Assista Agora", 
     gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", 
     pattern: "diagonal",
-    instagramImage: `https://images.weserv.nl/?url=${encodeURIComponent(STORY_IMAGE_MOCK)}`,
+    instagramImage: REAL_IMAGE_URL, // Injeta a imagem direto aqui para não falhar
     isStory: true 
   },
   { label: "Bastidor", subtitle: "Muay Thai · Kids", gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", pattern: "dots" },
@@ -37,26 +37,9 @@ export const Instagram = () => {
   const [tiles, setTiles] = useState(fallbackTiles);
 
   useEffect(() => {
-    // Mantém a estrutura preparada para caso queira plugar uma rota de API futuramente
-    fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://api.storiesig.info/api/profile/ctpedroalbuquerque"))
-      .then((res) => {
-        if (res.ok) return res.json();
-        throw new Error("Erro na requisição externa");
-      })
-      .then((wrapper) => {
-        const data = JSON.parse(wrapper.contents);
-        if (data && data.stories && data.stories.length > 0) {
-          const rawStoryUrl = data.stories[0].image_versions2.candidates[0].url;
-          const safeStoryUrl = `https://images.weserv.nl/?url=${encodeURIComponent(rawStoryUrl)}`;
-
-          setTiles((prev) =>
-            prev.map((tile, idx) =>
-              idx === 0 ? { ...tile, instagramImage: safeStoryUrl } : tile
-            )
-          );
-        }
-      })
-      .catch((err) => console.log("Executando com layout de segurança ativo:", err));
+    // Código de escuta limpo para futura integração de API
+    // Por enquanto ele mantém o estado inicial seguro que já vem com a imagem injetada
+    setTiles(fallbackTiles);
   }, []);
 
   return (
@@ -160,7 +143,6 @@ export const Instagram = () => {
           style={{ transitionDelay: visible ? "200ms" : "0ms" }}
         >
           {tiles.map((t, idx) => {
-            // Primeiro card vai direto para a tela de stories da página do CT
             const targetUrl = t.isStory ? `${INSTAGRAM_URL}/stories` : INSTAGRAM_URL;
 
             return (
