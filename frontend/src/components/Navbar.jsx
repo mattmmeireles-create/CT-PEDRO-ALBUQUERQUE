@@ -82,13 +82,16 @@ export const Navbar = () => {
             <InstagramIcon className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2.2} />
           </a>
           <Button
-            onClick={() => scrollToId("cta")}
-            data-testid="nav-cta-button"
-            className="bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-semibold rounded-none px-3 sm:px-4 md:px-6 h-9 sm:h-10 md:h-11 tracking-wide uppercase text-[11px] sm:text-xs md:text-sm border-0"
-          >
-            <span className="hidden sm:inline">Aula Grátis</span>
-            <span className="sm:hidden">Grátis</span>
-          </Button>
+  onClick={() => window.open(
+    "https://wa.me/5521982478764?text=Olá,%20quero%20a%20Aula%20Grátis!", 
+    "_blank"
+  )}
+  data-testid="nav-cta-button"
+  className="bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-semibold rounded-none px-3 sm:px-4 md:px-6 h-9 sm:h-10 md:h-11 tracking-wide uppercase text-[11px] sm:text-xs md:text-sm border-0"
+>
+  <span className="hidden sm:inline">Aula Grátis</span>
+  <span className="sm:hidden">Grátis</span>
+</Button>
           <button
             onClick={() => setMenuOpen((v) => !v)}
             data-testid="nav-mobile-toggle"
