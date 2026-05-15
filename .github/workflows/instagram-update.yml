@@ -1,0 +1,25 @@
+name: Update Instagram Story Thumbnail
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # Roda todo dia às 4 da manhã automaticamente
+  workflow_dispatch: # Permite que você clique em um botão no GitHub para rodar na hora
+
+jobs:
+  update-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - run: node fetch-instagram.js
+      - name: Commit changes
+        run: |
+          git config --global user.name 'Instagram Bot'
+          git config --global user.email 'bot@github.com'
+          git add public/instagram-cache.json
+          git commit -m "chore: update instagram story cache [skip ci]" || echo "Sem mudanças"
+          git push
