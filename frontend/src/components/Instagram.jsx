@@ -6,8 +6,18 @@ import useReveal from "../hooks/useReveal";
 export const INSTAGRAM_URL = "https://www.instagram.com/ctpedroalbuquerque";
 export const INSTAGRAM_HANDLE = "@ctpedroalbuquerque";
 
+// Imagem real de alta definição para servir de teste inicial imediato
+const TEST_IMAGE = "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=500&auto=format&fit=crop&q=80";
+
 const fallbackTiles = [
-  { label: "Treino do Dia", subtitle: "Boxe · Sparring", gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", pattern: "diagonal" },
+  { 
+    label: "Story Ativo", 
+    subtitle: "Assista Agora", 
+    gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", 
+    pattern: "diagonal",
+    instagramImage: `https://images.weserv.nl/?url=${encodeURIComponent(TEST_IMAGE)}`,
+    isStory: true 
+  },
   { label: "Bastidor", subtitle: "Muay Thai · Kids", gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", pattern: "dots" },
   { label: "Dica do Coach", subtitle: "Técnica · Postura", gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)", pattern: "stripes" },
   { label: "Reels", subtitle: "Kickboxing · Combo 3", gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)", pattern: "grid" },
@@ -27,33 +37,26 @@ export const Instagram = () => {
   const [tiles, setTiles] = useState(fallbackTiles);
 
   useEffect(() => {
-    // Buscando direto de uma API aberta de teste para ver se funciona no seu navegador agora
-    fetch("https://corsproxy.io/?https://api.storiesig.info/api/profile/ctpedroalbuquerque")
-      .then((res) => res.json())
-      .then((data) => {
+    // Tenta buscar a atualização dinâmica em segundo plano
+    fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://api.storiesig.info/api/profile/ctpedroalbuquerque"))
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error("Erro na rede");
+      })
+      .then((wrapper) => {
+        const data = JSON.parse(wrapper.contents);
         if (data && data.stories && data.stories.length > 0) {
-          // Pegamos o link da imagem original do story
           const rawStoryUrl = data.stories[0].image_versions2.candidates[0].url;
-          
-          // PASSAMOS PELO PROXY IMAGES.WESERV.NL PARA O INSTAGRAM NÃO BLOQUEAR A IMAGEM!
           const safeStoryUrl = `https://images.weserv.nl/?url=${encodeURIComponent(rawStoryUrl)}`;
 
-          const updatedTiles = fallbackTiles.map((tile, idx) => {
-            if (idx === 0) {
-              return {
-                ...tile,
-                label: "Story Ativo",
-                subtitle: "Assista Agora",
-                instagramImage: safeStoryUrl,
-                isStory: true
-              };
-            }
-            return tile;
-          });
-          setTiles(updatedTiles);
+          setTiles((prev) =>
+            prev.map((tile, idx) =>
+              idx === 0 ? { ...tile, instagramImage: safeStoryUrl } : tile
+            )
+          );
         }
       })
-      .catch((err) => console.log("Erro ao carregar dados externos do Insta:", err));
+      .catch((err) => console.log("Mantendo a imagem de teste/fallback ativa:", err));
   }, []);
 
   return (
