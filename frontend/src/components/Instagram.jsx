@@ -12,7 +12,7 @@ const fallbackTiles = [
     subtitle: "Assista Agora", 
     gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", 
     pattern: "diagonal",
-    instagramImage: "/kickboxing-story.jpg", // Imagem 1: Kickboxing
+    instagramImage: "https://images.unsplash.com/photo-1552072092-7f9b8d63efcb?q=80&w=600&auto=format&fit=crop", 
     isStory: true,
     link: `${INSTAGRAM_URL}/stories`
   },
@@ -21,7 +21,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", 
     pattern: "dots",
-    instagramImage: "/boxe.jpg", // Imagem 3: Boxe
+    instagramImage: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=600&auto=format&fit=crop", 
     link: "https://www.instagram.com/stories/highlights/18163021822156721/"
   },
   { 
@@ -29,7 +29,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)", 
     pattern: "stripes",
-    instagramImage: "/kickboxing.jpg", // Imagem 1: Kickboxing
+    instagramImage: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=600&auto=format&fit=crop", 
     link: "https://www.instagram.com/stories/highlights/17998922896344326/"
   },
   { 
@@ -37,7 +37,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)", 
     pattern: "grid",
-    instagramImage: "/muay-thai.jpg", // Imagem 4: Muay Thai
+    instagramImage: "https://images.unsplash.com/photo-1517438476312-10d79c67750d?q=80&w=600&auto=format&fit=crop", 
     link: "https://www.instagram.com/stories/highlights/17874789905399344/"
   },
   { 
@@ -45,7 +45,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)", 
     pattern: "diagonal",
-    instagramImage: "/treino-infantil.jpg", // Imagem 2: Treino Infantil
+    instagramImage: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?q=80&w=600&auto=format&fit=crop", 
     link: "https://www.instagram.com/stories/highlights/18217137670074358/"
   },
   { 
@@ -53,6 +53,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)", 
     pattern: "stripes",
+    instagramImage: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop",
     link: "https://www.instagram.com/stories/highlights/17853664847565155/"
   },
 ];
