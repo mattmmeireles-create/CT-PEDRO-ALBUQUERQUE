@@ -46,9 +46,7 @@ export const Hero = () => {
           {/* Left content */}
           <div
             className={`lg:col-span-8 transition-all duration-1000 ${
-              visible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-[var(--brand-accent)]/40 bg-[var(--brand-accent)]/10 mb-8">
@@ -85,28 +83,22 @@ export const Hero = () => {
 
             <div
               id="cta"
-              className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+              className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-6"
             >
+              {/* Botão de Clicar e ir para o WhatsApp integrado com o estilo do tema */}
               <Button
                 data-testid="hero-cta-button"
-                onClick={() =>
-                  document
-                    .getElementById("modalidades")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="group bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-bold uppercase tracking-[0.15em] text-sm md:text-base rounded-none h-14 px-8 border-0 shadow-[0_0_0_0_rgba(255,23,68,0)] hover:shadow-[0_0_40px_-5px_rgba(255,23,68,0.6)] transition-all"
+                onClick={() => {
+                  const message = "Ola! Eu gostaria de conhecer e saber mais sobre a aula grátis";
+                  const encodedMessage = encodeURIComponent(message);
+                  const whatsappUrl = `https://wa.me/5521982478764?text=${encodedMessage}`;
+                  window.open(whatsappUrl, '_blank');
+                }}
+                className="group bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-bold uppercase tracking-[0.15em] text-sm md:text-base rounded-none h-14 px-8 border-0 shadow-[0_0_0_0_rgba(255,23,68,0)] hover:shadow-[0_0_40px_-5px_rgba(255,23,68,0.6)] transition-all flex items-center gap-2"
               >
-     <Button
-  data-testid="hero-cta-button"
-  onClick={() => {
-    const message = "Ola! Eu gostaria de conhecer e saber mais sobre a aula grátis";
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/5521982478764?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-  }}
->
-  Ola! Eu gostaria de conhecer e saber mais sobre a aula grátis
-</Button>
+                Quero Minha Aula Grátis
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Button>
 
               <div className="flex items-center gap-3 text-white/50 text-xs md:text-sm">
                 <div className="flex -space-x-2">
@@ -133,9 +125,7 @@ export const Hero = () => {
           {/* Right stat block */}
           <div
             className={`lg:col-span-4 transition-all duration-1000 delay-300 ${
-              visible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             <div className="relative">
