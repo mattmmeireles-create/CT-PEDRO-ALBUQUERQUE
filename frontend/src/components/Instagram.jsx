@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Instagram as InstagramIcon, ArrowUpRight } from "lucide-react";
 import { Button } from "./ui/button";
 import useReveal from "../hooks/useReveal";
@@ -12,16 +12,16 @@ const fallbackTiles = [
     subtitle: "Assista Agora", 
     gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", 
     pattern: "diagonal",
-    instagramImage: "/kickboxing-story.jpg", // Imagem 1: Kickboxing
+    instagramImage: "https://images.unsplash.com/photo-1552072092-7f9b8d63efcb?q=80&w=600&auto=format&fit=crop", 
     isStory: true,
-    link: `${INSTAGRAM_URL}/stories`
+    link: `${INSTAGRAM_URL}/stories/`
   },
   { 
     label: "Boxe", 
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", 
     pattern: "dots",
-    instagramImage: "/boxe.jpg", // Imagem 3: Boxe
+    instagramImage: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=600&auto=format&fit=crop", 
     link: "https://www.instagram.com/stories/highlights/18163021822156721/"
   },
   { 
@@ -29,7 +29,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)", 
     pattern: "stripes",
-    instagramImage: "/kickboxing.jpg", // Imagem 1: Kickboxing
+    instagramImage: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=600&auto=format&fit=crop", 
     link: "https://www.instagram.com/stories/highlights/17998922896344326/"
   },
   { 
@@ -37,7 +37,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)", 
     pattern: "grid",
-    instagramImage: "/muay-thai.jpg", // Imagem 4: Muay Thai
+    instagramImage: "https://images.unsplash.com/photo-1517438476312-10d79c67750d?q=80&w=600&auto=format&fit=crop", 
     link: "https://www.instagram.com/stories/highlights/17874789905399344/"
   },
   { 
@@ -45,7 +45,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)", 
     pattern: "diagonal",
-    instagramImage: "/treino-infantil.jpg", // Imagem 2: Treino Infantil
+    instagramImage: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?q=80&w=600&auto=format&fit=crop", 
     link: "https://www.instagram.com/stories/highlights/18217137670074358/"
   },
   { 
@@ -53,6 +53,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)", 
     pattern: "stripes",
+    instagramImage: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop",
     link: "https://www.instagram.com/stories/highlights/17853664847565155/"
   },
 ];
@@ -66,7 +67,33 @@ const Patterns = {
 
 export const Instagram = () => {
   const { ref, visible } = useReveal();
-  const [tiles] = useState(fallbackTiles);
+  const [tiles, setTiles] = useState(fallbackTiles);
+
+  useEffect(() => {
+    // Tenta buscar o Story real do CT usando um proxy de segurança
+    const fetchStory = async () => {
+      try {
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.storiesig.info/api/profile/ctpedroalbuquerque')}`);
+        const data = await response.json();
+        const parsed = JSON.parse(data.contents);
+
+        if (parsed.stories && parsed.stories.length > 0) {
+          // Pega a URL da imagem do story mais recente
+          const rawUrl = parsed.stories[0].image_versions2.candidates[0].url;
+          // Usa o proxy weserv.nl para burlar o bloqueio de imagem do Instagram
+          const safeUrl = `https://images.weserv.nl/?url=${encodeURIComponent(rawUrl)}`;
+
+          setTiles(prev => prev.map((tile, i) => 
+            i === 0 ? { ...tile, instagramImage: safeUrl } : tile
+          ));
+        }
+      } catch (err) {
+        console.error("Não foi possível carregar o story dinâmico, usando fallback.", err);
+      }
+    };
+
+    fetchStory();
+  }, []);
 
   return (
     <section
@@ -102,36 +129,6 @@ export const Instagram = () => {
               <br />
               <span className="text-white/40">por dentro.</span>
             </h2>
-            <p className="mt-5 text-sm md:text-base text-white/55 leading-relaxed max-w-lg">
-              Treinos, bastidores, dicas técnicas e a evolução dos nossos alunos
-              — tudo em primeira mão no nosso Instagram.
-            </p>
-          </div>
-
-          <div className="lg:col-span-5 lg:col-start-8 flex">
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group w-full bg-[#0a0a0b] border border-white/10 p-6 md:p-7 hover:border-[var(--brand-accent)]/50 transition-all flex flex-col justify-between"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <span className="w-11 h-11 rounded-full flex items-center justify-center bg-gradient-to-tr from-[#FFDC80] via-[#E1306C] to-[#833AB4] flex-shrink-0">
-                    <InstagramIcon className="w-5 h-5 text-white" strokeWidth={2.2} />
-                  </span>
-                  <div className="min-w-0">
-                    <div className="text-xs uppercase tracking-[0.2em] text-white/40">
-                      Siga no Instagram
-                    </div>
-                    <div className="text-sm md:text-base font-semibold text-white truncate">
-                      {INSTAGRAM_HANDLE}
-                    </div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-5 h-5 text-white/30 group-hover:text-[var(--brand-accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
-              </div>
-            </a>
           </div>
         </div>
 
@@ -194,21 +191,13 @@ export const Instagram = () => {
           ))}
         </div>
 
-        <div
-          className={`mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-between gap-5 transition-all duration-1000 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-          style={{ transitionDelay: visible ? "400ms" : "0ms" }}
-        >
-          <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 text-center sm:text-left">
-            Conteúdo novo toda semana
-          </p>
+        <div className="mt-12 flex justify-center">
           <Button
             asChild
-            className="bg-gradient-to-tr from-[#F77737] via-[#E1306C] to-[#833AB4] hover:brightness-110 text-white font-bold uppercase tracking-[0.15em] text-xs md:text-sm rounded-none h-12 md:h-14 px-7 md:px-9 border-0 transition-all w-full sm:w-auto"
+            className="bg-gradient-to-tr from-[#F77737] via-[#E1306C] to-[#833AB4] hover:brightness-110 text-white font-bold uppercase tracking-[0.15em] px-9 h-14 rounded-none transition-all"
           >
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-              <InstagramIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" strokeWidth={2.2} />
+              <InstagramIcon className="w-5 h-5 mr-2" />
               Seguir no Instagram
             </a>
           </Button>
