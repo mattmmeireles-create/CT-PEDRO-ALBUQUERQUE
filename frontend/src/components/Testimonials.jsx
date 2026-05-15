@@ -200,7 +200,7 @@ export const Testimonials = () => {
               </div>
 
               <Button
-                onClick={() => window.open(GOOGLE_REVIEW_URL, "_blank")}
+                onClick={() => window.open(https://www.google.com/search?sca_esv=498f31acae8dba9f&sxsrf=ANbL-n7QHtvLo-M4R7BzeYd1DtaCHu1H5w:1778875239274&q=ct+pedro+albuquerque&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOWPPjy1QuBRX8tAaGMSPvNLQZHkV5aliPYPi-eFqCrTykc_NES_jjLnihkqux4XNKOH_9apB9h6Zpi8OpBLw7PALfFxIjcke1twkOKq1uZboGVLJXeMz658O6WZwnzSFczVRgC8%3D&sa=X&ved=2ahUKEwjCh_LViryUAxU9ILkGHXHkLSEQrrQLegQIHRAA&biw=1879&bih=925&dpr=1, "_blank")}
                 data-testid="leave-google-review-button"
                 className="mt-5 bg-white hover:bg-white/90 text-black font-semibold uppercase tracking-[0.12em] text-xs rounded-none h-11 border-0 w-full"
               >
