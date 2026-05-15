@@ -6,8 +6,8 @@ import useReveal from "../hooks/useReveal";
 export const INSTAGRAM_URL = "https://www.instagram.com/ctpedroalbuquerque";
 export const INSTAGRAM_HANDLE = "@ctpedroalbuquerque";
 
-// Imagem real de alta definição para servir de teste inicial imediato
-const TEST_IMAGE = "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=500&auto=format&fit=crop&q=80";
+// Imagem real e limpa para simular o Story ativo e testar o clique imediato
+const STORY_IMAGE_MOCK = "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=500&auto=format&fit=crop&q=80";
 
 const fallbackTiles = [
   { 
@@ -15,7 +15,7 @@ const fallbackTiles = [
     subtitle: "Assista Agora", 
     gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", 
     pattern: "diagonal",
-    instagramImage: `https://images.weserv.nl/?url=${encodeURIComponent(TEST_IMAGE)}`,
+    instagramImage: `https://images.weserv.nl/?url=${encodeURIComponent(STORY_IMAGE_MOCK)}`,
     isStory: true 
   },
   { label: "Bastidor", subtitle: "Muay Thai · Kids", gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", pattern: "dots" },
@@ -37,11 +37,11 @@ export const Instagram = () => {
   const [tiles, setTiles] = useState(fallbackTiles);
 
   useEffect(() => {
-    // Tenta buscar a atualização dinâmica em segundo plano
+    // Mantém a estrutura preparada para caso queira plugar uma rota de API futuramente
     fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://api.storiesig.info/api/profile/ctpedroalbuquerque"))
       .then((res) => {
         if (res.ok) return res.json();
-        throw new Error("Erro na rede");
+        throw new Error("Erro na requisição externa");
       })
       .then((wrapper) => {
         const data = JSON.parse(wrapper.contents);
@@ -56,7 +56,7 @@ export const Instagram = () => {
           );
         }
       })
-      .catch((err) => console.log("Mantendo a imagem de teste/fallback ativa:", err));
+      .catch((err) => console.log("Executando com layout de segurança ativo:", err));
   }, []);
 
   return (
@@ -160,6 +160,7 @@ export const Instagram = () => {
           style={{ transitionDelay: visible ? "200ms" : "0ms" }}
         >
           {tiles.map((t, idx) => {
+            // Primeiro card vai direto para a tela de stories da página do CT
             const targetUrl = t.isStory ? `${INSTAGRAM_URL}/stories` : INSTAGRAM_URL;
 
             return (
