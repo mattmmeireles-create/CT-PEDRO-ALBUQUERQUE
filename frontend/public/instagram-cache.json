@@ -1,0 +1,34 @@
+const fs = require('fs');
+const axios = require('axios');
+
+async function getInstagramStories() {
+  const options = {
+    method: 'GET',
+    url: 'https://instagram-data-provider.p.rapidapi.com/user/stories',
+    params: { username: 'ctpedroalbuquerque' },
+    headers: {
+      'X-RapidAPI-Key': 'S6aa39fd6ccmsh80b772609b13e4fp18faf5jsn3ec875188cf3', // <--- Cole sua chave aqui
+      'X-RapidAPI-Host': 'instagram-data-provider.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await axios.request(options);
+    // Ajuste os campos abaixo dependendo do formato exato que a API do RapidAPI te devolver
+    if (response.data && response.data.stories && response.data.stories.length > 0) {
+      const latestStoryImage = response.data.stories[0].image_url; 
+
+      const cacheData = {
+        storyImage: latestStoryImage,
+        feedImages: []
+      };
+
+      fs.writeFileSync('./public/instagram-cache.json', JSON.stringify(cacheData, null, 2));
+      console.log("✅ Sucesso! O arquivo de cache foi atualizado com a imagem do Story.");
+    }
+  } catch (error) {
+    console.error("Erro na API do RapidAPI:", error.message);
+  }
+}
+
+getInstagramStories();
