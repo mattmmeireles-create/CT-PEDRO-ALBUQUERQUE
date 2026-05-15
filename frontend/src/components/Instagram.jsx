@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Instagram as InstagramIcon, ArrowUpRight } from "lucide-react";
 import { Button } from "./ui/button";
 import useReveal from "../hooks/useReveal";
@@ -5,59 +6,55 @@ import useReveal from "../hooks/useReveal";
 export const INSTAGRAM_URL = "https://www.instagram.com/ctpedroalbuquerque";
 export const INSTAGRAM_HANDLE = "@ctpedroalbuquerque";
 
-// Stylized placeholder tiles — substituir por capturas reais quando disponível
-const tiles = [
-  {
-    label: "Treino do Dia",
-    subtitle: "Boxe · Sparring",
-    gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)",
-    pattern: "diagonal",
-  },
-  {
-    label: "Bastidor",
-    subtitle: "Muay Thai · Kids",
-    gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)",
-    pattern: "dots",
-  },
-  {
-    label: "Dica do Coach",
-    subtitle: "Técnica · Postura",
-    gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)",
-    pattern: "stripes",
-  },
-  {
-    label: "Reels",
-    subtitle: "Kickboxing · Combo 3",
-    gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)",
-    pattern: "grid",
-  },
-  {
-    label: "Aluno em Foco",
-    subtitle: "Antes & Depois",
-    gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)",
-    pattern: "diagonal",
-  },
-  {
-    label: "Eventos",
-    subtitle: "Campeonato Interno",
-    gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)",
-    pattern: "stripes",
-  },
+const fallbackTiles = [
+  { label: "Treino do Dia", subtitle: "Boxe · Sparring", gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", pattern: "diagonal" },
+  { label: "Bastidor", subtitle: "Muay Thai · Kids", gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", pattern: "dots" },
+  { label: "Dica do Coach", subtitle: "Técnica · Postura", gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)", pattern: "stripes" },
+  { label: "Reels", subtitle: "Kickboxing · Combo 3", gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)", pattern: "grid" },
+  { label: "Aluno em Foco", subtitle: "Antes & Depois", gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)", pattern: "diagonal" },
+  { label: "Eventos", subtitle: "Campeonato Interno", gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)", pattern: "stripes" },
 ];
 
 const Patterns = {
-  diagonal:
-    "repeating-linear-gradient(45deg, rgba(0,0,0,0.15) 0 2px, transparent 2px 14px)",
-  dots:
-    "radial-gradient(rgba(255,255,255,0.18) 1px, transparent 1.5px) 0 0 / 14px 14px",
-  stripes:
-    "repeating-linear-gradient(90deg, rgba(0,0,0,0.2) 0 3px, transparent 3px 24px)",
-  grid:
-    "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px) 0 0 / 24px 24px",
+  diagonal: "repeating-linear-gradient(45deg, rgba(0,0,0,0.15) 0 2px, transparent 2px 14px)",
+  dots: "radial-gradient(rgba(255,255,255,0.18) 1px, transparent 1.5px) 0 0 / 14px 14px",
+  stripes: "repeating-linear-gradient(90deg, rgba(0,0,0,0.2) 0 3px, transparent 3px 24px)",
+  grid: "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px) 0 0 / 24px 24px",
 };
 
 export const Instagram = () => {
   const { ref, visible } = useReveal();
+  const [tiles, setTiles] = useState(fallbackTiles);
+
+  useEffect(() => {
+    fetch("/instagram-cache.json")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          const updatedTiles = fallbackTiles.map((tile, idx) => {
+            // REGRA DA PRIMEIRA IMAGEM: Se for o card 0, tenta puxar especificamente o 'storyImage'
+            if (idx === 0 && data.storyImage) {
+              return {
+                ...tile,
+                label: "Story Ativo",
+                subtitle: "Assista Agora",
+                instagramImage: data.storyImage,
+                isStory: true // Marcador para usarmos a borda gradiente do Instagram
+              };
+            }
+            
+            // Os outros cards (1 a 5) continuam puxando as fotos normais do Feed do array 'feedImages'
+            const feedImgUrl = data.feedImages?.[idx - 1]?.url || null;
+            return {
+              ...tile,
+              instagramImage: feedImgUrl
+            };
+          });
+          setTiles(updatedTiles);
+        }
+      })
+      .catch((err) => console.log("Usando placeholders de segurança do Instagram:", err));
+  }, []);
 
   return (
     <section
@@ -160,49 +157,65 @@ export const Instagram = () => {
           }`}
           style={{ transitionDelay: visible ? "200ms" : "0ms" }}
         >
-          {tiles.map((t, idx) => (
-            <a
-              key={idx}
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid={`instagram-tile-${idx}`}
-              className="group relative aspect-square overflow-hidden border border-white/5 hover:border-[var(--brand-accent)]/40 transition-all"
-              style={{ background: t.gradient }}
-            >
-              {/* pattern overlay */}
-              <div
-                className="absolute inset-0 mix-blend-overlay"
-                style={{ background: Patterns[t.pattern] }}
-              />
-              {/* label */}
-              <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-between">
-                <div className="flex items-start justify-between">
-                  <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-white/80 font-semibold">
-                    /{String(idx + 1).padStart(2, "0")}
+          {tiles.map((t, idx) => {
+            // Se for o primeiro card e for um story ativo, manda direto pro link de stories da página
+            const targetUrl = t.isStory 
+              ? `${INSTAGRAM_URL}/stories` 
+              : INSTAGRAM_URL;
+
+            return (
+              <a
+                key={idx}
+                href={targetUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid={`instagram-tile-${idx}`}
+                className={`group relative aspect-square overflow-hidden border transition-all bg-cover bg-center ${
+                  t.isStory 
+                    ? "border-transparent ring-2 ring-pink-600 ring-offset-2 ring-offset-black animate-pulse" 
+                    : "border-white/5 hover:border-[var(--brand-accent)]/40"
+                }`}
+                style={{ 
+                  backgroundImage: t.instagramImage ? `url(${t.instagramImage})` : t.gradient 
+                }}
+              >
+                {t.instagramImage && (
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors z-0" />
+                )}
+
+                <div
+                  className="absolute inset-0 mix-blend-overlay z-10"
+                  style={{ background: Patterns[t.pattern] }}
+                />
+                
+                <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-between z-20">
+                  <div className="flex items-start justify-between">
+                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-white font-semibold shadow-sm">
+                      /{String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <InstagramIcon
+                      className="w-3.5 h-3.5 md:w-4 md:h-4 text-white group-hover:scale-110 transition-transform drop-shadow"
+                      strokeWidth={2.2}
+                    />
+                  </div>
+                  <div>
+                    <div className="text-[11px] md:text-sm font-bold text-white leading-tight drop-shadow-md">
+                      {t.label}
+                    </div>
+                    <div className="text-[9px] md:text-[10px] uppercase tracking-[0.18em] text-white/90 mt-0.5 drop-shadow-sm">
+                      {t.subtitle}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center z-30">
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] md:text-xs uppercase tracking-[0.25em] text-white font-semibold flex items-center gap-1.5">
+                    {t.isStory ? "Ver Story" : "Ver no Insta"} <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
-                  <InstagramIcon
-                    className="w-3.5 h-3.5 md:w-4 md:h-4 text-white/80 group-hover:scale-110 transition-transform"
-                    strokeWidth={2.2}
-                  />
                 </div>
-                <div>
-                  <div className="text-[11px] md:text-sm font-bold text-white leading-tight">
-                    {t.label}
-                  </div>
-                  <div className="text-[9px] md:text-[10px] uppercase tracking-[0.18em] text-white/60 mt-0.5">
-                    {t.subtitle}
-                  </div>
-                </div>
-              </div>
-              {/* hover veil */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] md:text-xs uppercase tracking-[0.25em] text-white font-semibold flex items-center gap-1.5">
-                  Ver no Insta <ArrowUpRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </a>
-          ))}
+              </a>
+            );
+          })}
         </div>
 
         {/* CTA below grid */}
