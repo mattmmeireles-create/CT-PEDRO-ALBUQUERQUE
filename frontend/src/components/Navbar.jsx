@@ -27,28 +27,33 @@ export const Navbar = () => {
   };
 
   return (
-    <header
-      data-testid="site-navbar"
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled || menuOpen
-          ? "bg-black/85 backdrop-blur-md border-b border-white/5"
-          : "bg-transparent"
-      }`}
+  <header
+  data-testid="site-navbar"
+  className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+    scrolled || menuOpen
+      ? "bg-black/85 backdrop-blur-md border-b border-white/5"
+      : "bg-transparent"
+    }`}
+>
+  <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3">
+    <a
+      href="#top"
+      data-testid="brand-logo"
+      className="flex items-center gap-2 group min-w-0"
+      onClick={() => setMenuOpen(false)}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3">
-        <a
-          href="#top"
-          data-testid="brand-logo"
-          className="flex items-center gap-2 group min-w-0"
-          onClick={() => setMenuOpen(false)}
-        >
-          <span className="h-6 sm:h-7 w-1.5 bg-[var(--brand-accent)] block group-hover:h-8 transition-all flex-shrink-0" />
-          <span className="font-display text-[15px] sm:text-lg md:text-xl tracking-tight text-white whitespace-nowrap">
-            <span className="text-[var(--brand-accent)]">CT</span>
-            <span className="hidden xs:inline"> PEDRO ALBUQUERQUE</span>
-            <span className="inline xs:hidden"> PEDRO A.</span>
-          </span>
-        </a>
+      {/* Accent Bar remains intact */}
+      <span className="h-6 sm:h-7 w-1.5 bg-[var(--brand-accent)] block group-hover:h-8 transition-all flex-shrink-0" />
+      
+      {/* Replaced text spans with a responsive image logo */}
+      <img 
+        src="/frontend/public/pedro_albuquerque_logo.png" 
+        alt="CT Pedro Albuquerque Logo" 
+        className="h-6 sm:h-7 md:h-8 w-auto object-contain"
+      />
+    </a>
+  </div>
+</header>
 
         <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-[0.18em] text-white/70 font-medium">
           <button onClick={() => scrollToId("modalidades")} className="hover:text-white transition-colors" data-testid="nav-modalities">
