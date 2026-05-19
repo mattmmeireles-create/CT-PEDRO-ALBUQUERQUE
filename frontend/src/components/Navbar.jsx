@@ -47,7 +47,7 @@ export const Navbar = () => {
       
       {/* Replaced text spans with a responsive image logo */}
       <img 
-        src="/frontend/public/pedro_albuquerque_logo.png" 
+        src="pedro_albuquerque_logo.png" 
         alt="CT Pedro Albuquerque Logo" 
         className="h-6 sm:h-7 md:h-8 w-auto object-contain"
       />
