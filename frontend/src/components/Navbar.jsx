@@ -36,28 +36,28 @@ export const Navbar = () => {
       }`}
     >
       {/* Main Flex container that holds everything in line */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 relative">
         
-        {/* Brand Logo - Top Left Position */}
+        {/* Brand Logo - Scaled Up 5x & Positioned Top Left */}
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-2 group min-w-0"
+          className="flex items-center gap-3 group min-w-0 self-center md:self-start md:pt-4"
           onClick={() => setMenuOpen(false)}
         >
-          {/* Accent Bar */}
-          <span className="h-6 sm:h-7 w-1.5 bg-[var(--brand-accent)] block group-hover:h-8 transition-all flex-shrink-0" />
+          {/* Accent Bar scales slightly with the layout */}
+          <span className="h-10 sm:h-12 w-1.5 bg-[var(--brand-accent)] block group-hover:h-14 transition-all flex-shrink-0" />
           
-          {/* Image Logo */}
+          {/* Image Logo - 5x taller configuration */}
           <img 
             src="/pedro_albuquerque_logo.png" 
             alt="CT Pedro Albuquerque Logo" 
-            className="h-6 sm:h-7 md:h-8 w-auto object-contain"
+            className="h-24 sm:h-28 md:h-32 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all execution-duration-300"
           />
         </a>
 
         {/* Desktop Navigation Links - Middle Position */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-[0.18em] text-white/70 font-medium">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-[0.18em] text-white/70 font-medium</div>">
           <button onClick={() => scrollToId("modalidades")} className="hover:text-white transition-colors" data-testid="nav-modalities">
             Modalidades
           </button>
