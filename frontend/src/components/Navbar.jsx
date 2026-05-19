@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";           // ← Keep only this one
+import { Button } from "./ui/button";
 import { Instagram as InstagramIcon, Menu, X } from "lucide-react";
 import { INSTAGRAM_URL } from "./Instagram";
 
@@ -27,34 +27,36 @@ export const Navbar = () => {
   };
 
   return (
-  <header
-  data-testid="site-navbar"
-  className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-    scrolled || menuOpen
-      ? "bg-black/85 backdrop-blur-md border-b border-white/5"
-      : "bg-transparent"
-    }`}
->
-  <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3">
-    <a
-      href="#top"
-      data-testid="brand-logo"
-      className="flex items-center gap-2 group min-w-0"
-      onClick={() => setMenuOpen(false)}
+    <header
+      data-testid="site-navbar"
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+        scrolled || menuOpen
+          ? "bg-black/85 backdrop-blur-md border-b border-white/5"
+          : "bg-transparent"
+      }`}
     >
-      {/* Accent Bar remains intact */}
-      <span className="h-6 sm:h-7 w-1.5 bg-[var(--brand-accent)] block group-hover:h-8 transition-all flex-shrink-0" />
-      
-      {/* Replaced text spans with a responsive image logo */}
-      <img 
-        src="pedro_albuquerque_logo.png" 
-        alt="CT Pedro Albuquerque Logo" 
-        className="h-6 sm:h-7 md:h-8 w-auto object-contain"
-      />
-    </a>
-  </div>
-</header>
+      {/* Main Flex container that holds everything in line */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3">
+        
+        {/* Brand Logo - Top Left Position */}
+        <a
+          href="#top"
+          data-testid="brand-logo"
+          className="flex items-center gap-2 group min-w-0"
+          onClick={() => setMenuOpen(false)}
+        >
+          {/* Accent Bar */}
+          <span className="h-6 sm:h-7 w-1.5 bg-[var(--brand-accent)] block group-hover:h-8 transition-all flex-shrink-0" />
+          
+          {/* Image Logo */}
+          <img 
+            src="/pedro_albuquerque_logo.png" 
+            alt="CT Pedro Albuquerque Logo" 
+            className="h-6 sm:h-7 md:h-8 w-auto object-contain"
+          />
+        </a>
 
+        {/* Desktop Navigation Links - Middle Position */}
         <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-[0.18em] text-white/70 font-medium">
           <button onClick={() => scrollToId("modalidades")} className="hover:text-white transition-colors" data-testid="nav-modalities">
             Modalidades
@@ -70,6 +72,7 @@ export const Navbar = () => {
           </button>
         </nav>
 
+        {/* Action Buttons & Hamburger Menu - Top Right Position */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           <a
             href={INSTAGRAM_URL}
@@ -81,17 +84,19 @@ export const Navbar = () => {
           >
             <InstagramIcon className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2.2} />
           </a>
+          
           <Button
-  onClick={() => window.open(
-    "https://wa.me/5521982478764?text=Olá,%20quero%20a%20Aula%20Grátis!", 
-    "_blank"
-  )}
-  data-testid="nav-cta-button"
-  className="bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-semibold rounded-none px-3 sm:px-4 md:px-6 h-9 sm:h-10 md:h-11 tracking-wide uppercase text-[11px] sm:text-xs md:text-sm border-0"
->
-  <span className="hidden sm:inline">Aula Grátis</span>
-  <span className="sm:hidden">Grátis</span>
-</Button>
+            onClick={() => window.open(
+              "https://wa.me/5521982478764?text=Olá,%20quero%20a%20Aula%20Grátis!", 
+              "_blank"
+            )}
+            data-testid="nav-cta-button"
+            className="bg-[var(--brand-accent)] hover:bg-[var(--brand-accent-hover)] text-black font-semibold rounded-none px-3 sm:px-4 md:px-6 h-9 sm:h-10 md:h-11 tracking-wide uppercase text-[11px] sm:text-xs md:text-sm border-0"
+          >
+            <span className="hidden sm:inline">Aula Grátis</span>
+            <span className="sm:hidden">Grátis</span>
+          </Button>
+
           <button
             onClick={() => setMenuOpen((v) => !v)}
             data-testid="nav-mobile-toggle"
@@ -101,9 +106,10 @@ export const Navbar = () => {
             {menuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
+
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile Menu Drawer Container */}
       <div
         data-testid="mobile-menu"
         className={`md:hidden overflow-hidden transition-all duration-300 ${
