@@ -38,38 +38,38 @@ export const Navbar = () => {
       {/* Main Flex container that holds everything in line */}
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 relative">
         
-        {/* Brand Logo & Stacked Text Container */}
+        {/* Brand Logo & Stacked Text Container - Scaled up 2x */}
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-3 group min-w-0 self-center md:self-start md:pt-4"
+          className="flex items-center gap-4 group min-w-0 self-center md:self-start md:pt-2"
           onClick={() => setMenuOpen(false)}
         >
-          {/* Accent Bar */}
-          <span className="h-10 sm:h-12 w-1.5 bg-[var(--brand-accent)] block group-hover:h-14 transition-all flex-shrink-0" />
+          {/* Accent Bar - Made taller to match 2x layout */}
+          <span className="h-14 sm:h-16 w-1.5 bg-[var(--brand-accent)] block group-hover:h-20 transition-all flex-shrink-0" />
           
-          {/* Image Logo */}
+          {/* Image Logo - Doubled Size */}
           <img 
             src="/pedro_albuquerque_logo.png" 
             alt="CT Pedro Albuquerque Logo" 
-            className="h-14 sm:h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+            className="h-28 sm:h-32 md:h-40 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
           />
 
-          {/* Stacked Branding Text Block next to the image */}
-          <div className="flex flex-col font-display uppercase tracking-tight leading-[1.1] text-left select-none">
-            <span className="text-white text-xs sm:text-sm font-light">
+          {/* Stacked Branding Text Block - Doubled Font Sizes */}
+          <div className="flex flex-col font-display uppercase tracking-tight leading-[1.05] text-left select-none">
+            <span className="text-white text-lg sm:text-xl font-light">
               CT
             </span>
-            <span className="text-[var(--brand-accent)] text-sm sm:text-base font-bold">
+            <span className="text-[var(--brand-accent)] text-xl sm:text-2xl font-bold">
               Pedro
             </span>
-            <span className="text-[var(--brand-accent)] text-[11px] sm:text-xs font-black tracking-wider">
+            <span className="text-[var(--brand-accent)] text-base sm:text-lg font-black tracking-wider">
               Albuquerque
             </span>
           </div>
         </a>
 
-        {/* Desktop Navigation Links - Middle Position (Cleaned up syntax error) */}
+        {/* Desktop Navigation Links - Middle Position */}
         <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-[0.18em] text-white/70 font-medium">
           <button onClick={() => scrollToId("modalidades")} className="hover:text-white transition-colors" data-testid="nav-modalities">
             Modalidades
