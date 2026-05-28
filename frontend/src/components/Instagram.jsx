@@ -21,7 +21,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", 
     pattern: "dots",
-    instagramImage: "/boxe.jpg", // Imagem 3: Boxe
+    instagramImage: "/boxe.jpg",
     link: "https://www.instagram.com/stories/highlights/18163021822156721/"
   },
   { 
@@ -29,7 +29,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)", 
     pattern: "stripes",
-    instagramImage: "/kickboxing.jpg", // Imagem 1: Kickboxing
+    instagramImage: "/kickboxing.jpg",
     link: "https://www.instagram.com/stories/highlights/17998922896344326/"
   },
   { 
@@ -37,7 +37,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)", 
     pattern: "grid",
-    instagramImage: "/muay-thai.jpg", // Imagem 4: Muay Thai
+    instagramImage: "/muay-thai.jpg",
     link: "https://www.instagram.com/stories/highlights/17874789905399344/"
   },
   { 
@@ -45,7 +45,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)", 
     pattern: "diagonal",
-    instagramImage: "/treino-infantil.jpg", // Imagem 2: Treino Infantil
+    instagramImage: "/treino-infantil.jpg",
     link: "https://www.instagram.com/stories/highlights/18217137670074358/"
   },
   { 
@@ -53,7 +53,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque", 
     gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)", 
     pattern: "stripes",
-    instagramImage: "/Aula Particular.jpeg", // Imagem 5: Aula Particular
+    instagramImage: "/Aula Particular.jpeg",
     link: "https://www.instagram.com/stories/highlights/17853664847565155/"
   },
 ];
@@ -68,6 +68,24 @@ const Patterns = {
 export const Instagram = () => {
   const { ref, visible } = useReveal();
   const [tiles] = useState(fallbackTiles);
+
+  // 🛠️ FUNÇÃO CORRETORA: Força a abertura no aplicativo nativo se for celular
+  const handleInstagramRedirect = (e, webUrl) => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      e.preventDefault();
+      // Protocolo universal para abrir direto o perfil do CT dentro do App do Instagram
+      window.location.href = "instagram://user?username=ctpedroalbuquerque";
+      
+      // Fallback de segurança: Caso o usuário não tenha o app do Instagram instalado,
+      // ele abre o link no navegador após 1.2 segundos.
+      setTimeout(() => {
+        window.open(webUrl, "_blank", "noopener,noreferrer");
+      }, 1200);
+    }
+    // Se for PC, o comportamento do link padrão (href) segue normalmente sem interrupções
+  };
 
   return (
     <section
@@ -114,6 +132,7 @@ export const Instagram = () => {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL)} // Aplicado aqui
               className="group w-full bg-[#0a0a0b] border border-white/10 p-6 md:p-7 hover:border-[var(--brand-accent)]/50 transition-all flex flex-col justify-between"
             >
               <div className="flex items-start justify-between gap-3">
@@ -136,6 +155,7 @@ export const Instagram = () => {
           </div>
         </div>
 
+        {/* Grid de Blocos/Tiles */}
         <div
           className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 transition-all duration-1000 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -148,6 +168,7 @@ export const Instagram = () => {
               href={t.link}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => handleInstagramRedirect(e, t.link)} // Aplicado em cada card individual
               className={`group relative aspect-square overflow-hidden border transition-all bg-cover bg-center ${
                 t.isStory 
                   ? "border-transparent ring-2 ring-pink-600 ring-offset-2 ring-offset-black animate-pulse" 
@@ -208,7 +229,12 @@ export const Instagram = () => {
             asChild
             className="bg-gradient-to-tr from-[#F77737] via-[#E1306C] to-[#833AB4] hover:brightness-110 text-white font-bold uppercase tracking-[0.15em] text-xs md:text-sm rounded-none h-12 md:h-14 px-7 md:px-9 border-0 transition-all w-full sm:w-auto"
           >
-            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+            <a 
+              href={INSTAGRAM_URL} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL)} // Aplicado no botão inferior grande
+            >
               <InstagramIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" strokeWidth={2.2} />
               Seguir no Instagram
             </a>
