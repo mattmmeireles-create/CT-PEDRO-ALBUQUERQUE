@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button"; // Voltamos para as chaves (o erro confirmou que este é o certo!)
+import { Button } from "./ui/button"; // Mantido com chaves conforme seu ambiente
 import { Instagram as InstagramIcon, Menu, X } from "lucide-react";
 import { INSTAGRAM_URL } from "./Instagram";
 
@@ -38,33 +38,30 @@ export const Navbar = () => {
       {/* Main Flex container that holds everything in line */}
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 relative">
         
-        {/* Brand Logo & Stacked Text Container - Logo colada ao texto */}
+        {/* Brand Logo & Stacked Text Container */}
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-1 group min-w-0 self-center md:self-start md:pt-2"
+          className="flex items-center gap-2 group min-w-0 self-center"
           onClick={() => setMenuOpen(false)}
         >
-          {/* Accent Bar - Made taller to match 2x layout */}
-          <span className="h-14 sm:h-16 w-1.5 bg-[var(--brand-accent)] block group-hover:h-20 transition-all flex-shrink-0" />
+          {/* Accent Bar - Redimensionado para o novo tamanho da logo */}
+          <span className="h-10 sm:h-12 w-1.5 bg-[var(--brand-accent)] block group-hover:h-14 transition-all flex-shrink-0" />
           
-          {/* Image Logo - Tamanho grande mantido */}
+          {/* Image Logo - Ficou 20% menor */}
           <img 
             src="/CT_pedro.png" 
             alt="CT Pedro Albuquerque Logo" 
-            className="h-28 sm:h-32 md:h-40 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex-shrink-0"
+            className="h-20 sm:h-24 md:h-32 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex-shrink-0"
           />
 
-          {/* Stacked Branding Text Block - Atualizado com o novo texto */}
-          <div className="flex flex-col font-display uppercase tracking-tight leading-[1.05] text-left select-none">
-            <span className="text-white text-[10px] sm:text-xs font-light tracking-normal whitespace-nowrap">
-              Centro de Combate de Elite
+          {/* Novo Bloco de Texto - Fonte Robusta, Itálica e com as cores pedidas */}
+          <div className="flex flex-col font-display uppercase tracking-tighter italic leading-[0.9] text-left select-none pl-1">
+            <span className="text-white text-lg sm:text-xl md:text-2xl font-black">
+              CT
             </span>
-            <span className="text-[var(--brand-accent)] text-xl sm:text-2xl font-bold">
-              Pedro
-            </span>
-            <span className="text-[var(--brand-accent)] text-base sm:text-lg font-black tracking-wider">
-              Albuquerque
+            <span className="text-red-600 text-xl sm:text-2xl md:text-3xl font-black whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              Pedro Albuquerque
             </span>
           </div>
         </a>
@@ -151,6 +148,4 @@ export const Navbar = () => {
   );
 };
 
-// 🌟 TRUQUE MÁGICO: Exportamos também como default.
-// Isso resolve o erro #130 caso você tenha importado como "import Navbar" no seu App.jsx!
 export default Navbar;
