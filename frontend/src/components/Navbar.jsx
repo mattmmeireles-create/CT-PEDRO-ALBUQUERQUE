@@ -6,30 +6,34 @@ import { INSTAGRAM_URL } from "./Instagram";
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [visible, setVisible] = useState(true); // NOVO: Controla se a barra está visível
-  const [lastScrollY, setLastScrollY] = useState(0); // NOVO: Guarda a última posição do scroll
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    // Mantém o controle do scroll anterior estável dentro do efeito
+    let lastScrollY = window.scrollY;
+
     const onScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Se o menu mobile estiver aberto, mantém a navbar fixa para não quebrar a tela
       if (menuOpen) return;
 
-      // Lógica para sumir ao descer e aparecer ao subir
+      // Filtro de tolerância: ignora micro-movimentos menores que 10px (evita pulos na tela)
+      if (Math.abs(currentScrollY - lastScrollY) < 10) return;
+
+      // Lógica suave de visibilidade
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setVisible(false); // Rolando para baixo -> esconde a barra
+        setVisible(false); // Sumir ao rolar para baixo
       } else {
-        setVisible(true); // Rolando para cima -> mostra a barra
+        setVisible(true); // Reaparecer ao rolar para cima
       }
 
       setScrolled(currentScrollY > 24);
-      setLastScrollY(currentScrollY);
+      lastScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [lastScrollY, menuOpen]);
+  }, [menuOpen]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -47,12 +51,12 @@ export const Navbar = () => {
   return (
     <header
       data-testid="site-navbar"
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out ${
         scrolled || menuOpen
-          ? "bg-black/85 backdrop-blur-md border-b border-white/5"
+          ? "bg-black/90 backdrop-blur-md border-b border-white/5 shadow-xl"
           : "bg-transparent"
       } ${
-        visible ? "translate-y-0" : "-translate-y-full" // NOVO: Efeito suave de subida/descida da barra inteira
+        visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0" // Ajuste fino com opacidade junto do movimento
       }`}
     >
       {/* Main Flex container that holds everything in line */}
@@ -62,17 +66,17 @@ export const Navbar = () => {
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-2 group min-w-0 self-center transform translate-y-1.5 sm:translate-y-2 md:translate-y-3.5 transition-transform" // ALTERADO: Logo empurrada um pouco para baixo
+          className="flex items-center gap-2 group min-w-0 self-center transform translate-y-3.5 sm:translate-y-4 md:translate-y-6 transition-all duration-300" // AJUSTADO: Rebaixado um pouco mais para um encaixe perfeito
           onClick={() => setMenuOpen(false)}
         >
-          {/* Accent Bar - Redimensionado para o novo tamanho da logo */}
+          {/* Accent Bar */}
           <span className="h-10 sm:h-12 w-1.5 bg-[var(--brand-accent)] block group-hover:h-14 transition-all flex-shrink-0" />
           
-          {/* Image Logo - Ficou 20% menor */}
+          {/* Image Logo */}
           <img 
             src="/CT_pedro.png" 
             alt="CT Pedro Albuquerque Logo" 
-            className="h-20 sm:h-24 md:h-32 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex-shrink-0"
+            className="h-20 sm:h-24 md:h-32 w-auto object-contain drop-shadow-[0_6px_16px_rgba(0,0,0,0.6)] flex-shrink-0"
           />
 
           {/* Novo Bloco de Texto - Fonte Robusta, Itálica e com as cores pedidas */}
