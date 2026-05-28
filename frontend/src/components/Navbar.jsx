@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Button from "./ui/button"; // CORREÇÃO: Alterado para importação padrão (sem chaves)
+import { Button } from "./ui/button"; // Voltamos para as chaves (o erro confirmou que este é o certo!)
 import { Instagram as InstagramIcon, Menu, X } from "lucide-react";
 import { INSTAGRAM_URL } from "./Instagram";
 
@@ -150,3 +150,7 @@ export const Navbar = () => {
     </header>
   );
 };
+
+// 🌟 TRUQUE MÁGICO: Exportamos também como default.
+// Isso resolve o erro #130 caso você tenha importado como "import Navbar" no seu App.jsx!
+export default Navbar;
