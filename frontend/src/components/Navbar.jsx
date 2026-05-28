@@ -50,7 +50,7 @@ export const Navbar = () => {
           
           {/* Image Logo - Tamanho grande mantido */}
           <img 
-            src="/pedro_albuquerque_logo.png" 
+            src="/CT_pedro.png" 
             alt="CT Pedro Albuquerque Logo" 
             className="h-28 sm:h-32 md:h-40 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex-shrink-0"
           />
