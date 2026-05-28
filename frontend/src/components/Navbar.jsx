@@ -6,12 +6,30 @@ import { INSTAGRAM_URL } from "./Instagram";
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [visible, setVisible] = useState(true); // NOVO: Controla se a barra está visível
+  const [lastScrollY, setLastScrollY] = useState(0); // NOVO: Guarda a última posição do scroll
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Se o menu mobile estiver aberto, mantém a navbar fixa para não quebrar a tela
+      if (menuOpen) return;
+
+      // Lógica para sumir ao descer e aparecer ao subir
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setVisible(false); // Rolando para baixo -> esconde a barra
+      } else {
+        setVisible(true); // Rolando para cima -> mostra a barra
+      }
+
+      setScrolled(currentScrollY > 24);
+      setLastScrollY(currentScrollY);
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lastScrollY, menuOpen]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -33,6 +51,8 @@ export const Navbar = () => {
         scrolled || menuOpen
           ? "bg-black/85 backdrop-blur-md border-b border-white/5"
           : "bg-transparent"
+      } ${
+        visible ? "translate-y-0" : "-translate-y-full" // NOVO: Efeito suave de subida/descida da barra inteira
       }`}
     >
       {/* Main Flex container that holds everything in line */}
@@ -42,7 +62,7 @@ export const Navbar = () => {
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-2 group min-w-0 self-center"
+          className="flex items-center gap-2 group min-w-0 self-center transform translate-y-1.5 sm:translate-y-2 md:translate-y-3.5 transition-transform" // ALTERADO: Logo empurrada um pouco para baixo
           onClick={() => setMenuOpen(false)}
         >
           {/* Accent Bar - Redimensionado para o novo tamanho da logo */}
