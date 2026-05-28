@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import Button from "./ui/button"; // CORREÇÃO: Alterado para importação padrão (sem chaves)
 import { Instagram as InstagramIcon, Menu, X } from "lucide-react";
 import { INSTAGRAM_URL } from "./Instagram";
 
