@@ -75,36 +75,36 @@ export const Modalities = () => {
                 </p>
               </div>
 
-              {/* Rodapé do Card (Stats e Horários) */}
-              <div className="border-t border-white/5 pt-6 mt-auto">
-                <div className="flex justify-between items-end">
-                  {/* Estatística Principal */}
-                  <div>
-                    <div className="text-2xl font-black text-white leading-none">
-                      {item.stat}
-                    </div>
-                    <div className="text-[10px] uppercase tracking-wider text-white/40 mt-1">
-                      {item.statLabel}
-                    </div>
+              {/* Rodapé do Card (Stats e Horários empilhados verticalmente) */}
+              <div className="border-t border-white/5 pt-6 mt-auto flex flex-col gap-5">
+                
+                {/* Estatística Principal */}
+                <div>
+                  <div className="text-2xl font-black text-white leading-none">
+                    {item.stat}
                   </div>
-
-                  {/* Horários */}
-                  <div className="text-right">
-                    <div className="text-[10px] uppercase tracking-widest text-white/40 mb-1.5">
-                      Horários
-                    </div>
-                    <div className="flex gap-1.5 justify-end">
-                      {item.schedule.map((time) => (
-                        <span 
-                          key={time} 
-                          className="text-xs bg-white/10 px-2 py-0.5 font-mono text-white/90"
-                        >
-                          {time}
-                        </span>
-                      ))}
-                    </div>
+                  <div className="text-[10px] uppercase tracking-wider text-white/40 mt-1">
+                    {item.statLabel}
                   </div>
                 </div>
+
+                {/* Horários - Agora posicionados embaixo e maiores */}
+                <div className="pt-4 border-t border-white/5">
+                  <div className="text-[10px] uppercase tracking-widest text-white/40 mb-2">
+                    Horários das Aulas
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {item.schedule.map((time) => (
+                      <span 
+                        key={time} 
+                        className="text-base sm:text-lg font-bold bg-white/10 px-3.5 py-1.5 font-mono text-white tracking-wide border border-white/5 rounded-none"
+                      >
+                        {time}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
               </div>
 
             </div>
@@ -116,5 +116,4 @@ export const Modalities = () => {
   );
 };
 
-// Exportação tripla de segurança para evitar o erro de importação #130
 export default Modalities;
