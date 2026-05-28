@@ -131,7 +131,6 @@ export const Instagram = () => {
             </p>
           </div>
 
-          {/* CAIXA DO INSTAGRAM COM AS INFORMAÇÕES DA BIO */}
           <div className="lg:col-span-5 lg:col-start-8 flex">
             <a
               href={INSTAGRAM_URL}
@@ -158,7 +157,6 @@ export const Instagram = () => {
                   <ArrowUpRight className="w-5 h-5 text-white/30 group-hover:text-[var(--brand-accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
                 </div>
 
-                {/* 🎯 SEÇÃO DA BIO ADICIONADA AQUI */}
                 <div className="mt-6 pt-5 border-t border-white/5 space-y-2 text-xs md:text-sm text-white/70 font-medium tracking-wide">
                   <p className="flex items-center gap-2">
                     <span>🥊</span> <strong>Centro de Combate de Elite</strong>
@@ -175,7 +173,6 @@ export const Instagram = () => {
                 </div>
               </div>
 
-              {/* Linha inferior discreta de chamada para ação */}
               <div className="mt-6 text-[11px] uppercase tracking-widest text-[var(--brand-accent)] font-bold group-hover:underline">
                 Toque para abrir o perfil completo →
               </div>
@@ -183,7 +180,6 @@ export const Instagram = () => {
           </div>
         </div>
 
-        {/* Grid de Blocos/Tiles */}
         <div
           className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 transition-all duration-1000 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -272,5 +268,3 @@ export const Instagram = () => {
     </section>
   );
 };
-
-```
