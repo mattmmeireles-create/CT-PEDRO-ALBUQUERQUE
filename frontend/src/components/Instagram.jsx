@@ -69,25 +69,24 @@ export const Instagram = () => {
   const { ref, visible } = useReveal();
   const [tiles] = useState(fallbackTiles);
 
-  const handleInstagramRedirect = (e, webUrl) => {
+  // Redirecionamento seguro usando protocolos oficiais do app do Instagram
+  const handleInstagramRedirect = (e, webUrl, isStory = false) => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
     if (isMobile) {
       e.preventDefault();
-      let deepLink = webUrl;
-
-      if (webUrl.includes("/stories/")) {
-        deepLink = webUrl.replace("https://www.instagram.com/", "instagram://");
-        deepLink = deepLink.replace("https://instagram.com/", "instagram://");
-      } else {
-        deepLink = "instagram://user?username=ctpedroalbuquerque";
-      }
+      
+      // Se for o card do Story ativo, abre o Story; caso contrário, abre o perfil direto no App
+      const deepLink = isStory 
+        ? "instagram://story?username=ctpedroalbuquerque"
+        : "instagram://user?username=ctpedroalbuquerque";
 
       window.location.href = deepLink;
       
+      // Fallback seguro caso o app não responda ou não esteja instalado
       setTimeout(() => {
         window.open(webUrl, "_blank", "noopener,noreferrer");
-      }, 1500);
+      }, 1000);
     }
   };
 
@@ -136,7 +135,7 @@ export const Instagram = () => {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL)}
+              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL, false)}
               className="group w-full bg-[#0a0a0b] border border-white/10 p-6 md:p-7 hover:border-[var(--brand-accent)]/50 transition-all flex flex-col justify-between"
             >
               <div>
@@ -192,7 +191,7 @@ export const Instagram = () => {
               href={t.link}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => handleInstagramRedirect(e, t.link)}
+              onClick={(e) => handleInstagramRedirect(e, t.link, t.isStory)}
               className={`group relative aspect-square overflow-hidden border transition-all bg-cover bg-center ${
                 t.isStory 
                   ? "border-transparent ring-2 ring-pink-600 ring-offset-2 ring-offset-black animate-pulse" 
@@ -257,7 +256,7 @@ export const Instagram = () => {
               href={INSTAGRAM_URL} 
               target="_blank" 
               rel="noopener noreferrer"
-              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL)}
+              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL, false)}
             >
               <InstagramIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" strokeWidth={2.2} />
               Seguir no Instagram
