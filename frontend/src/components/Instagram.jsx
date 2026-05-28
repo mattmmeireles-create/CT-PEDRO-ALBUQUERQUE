@@ -1,14 +1,3 @@
-**Nota sobre o idioma:** Como a sua mensagem foi enviada em português, não há erros de inglês para corrigirmos desta vez.
-
----
-
-Excelente ideia! Colocar as informações da bio dentro do card do Instagram deixa a página muito mais profissional e já dá um resumo do que é o CT para quem está navegando.
-
-Baseado nas modalidades do seu site e nos dados do CT, montei uma bio matadora e ultra-organizada com emojis para colocar dentro da caixa lateral. O card agora também se ajusta perfeitamente para preencher a altura da seção ao lado do texto.
-
-Substitua todo o conteúdo do seu arquivo **`Instagram.jsx`** por este código:
-
-```jsx
 import { useState } from "react";
 import { Instagram as InstagramIcon, ArrowUpRight } from "lucide-react";
 import { Button } from "./ui/button";
