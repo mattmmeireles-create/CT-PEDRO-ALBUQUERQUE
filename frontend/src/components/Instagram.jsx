@@ -1,3 +1,14 @@
+**Nota sobre o idioma:** Como a sua mensagem foi enviada em português, não há erros de inglês para corrigirmos desta vez.
+
+---
+
+Excelente ideia! Colocar as informações da bio dentro do card do Instagram deixa a página muito mais profissional e já dá um resumo do que é o CT para quem está navegando.
+
+Baseado nas modalidades do seu site e nos dados do CT, montei uma bio matadora e ultra-organizada com emojis para colocar dentro da caixa lateral. O card agora também se ajusta perfeitamente para preencher a altura da seção ao lado do texto.
+
+Substitua todo o conteúdo do seu arquivo **`Instagram.jsx`** por este código:
+
+```jsx
 import { useState } from "react";
 import { Instagram as InstagramIcon, ArrowUpRight } from "lucide-react";
 import { Button } from "./ui/button";
@@ -69,22 +80,26 @@ export const Instagram = () => {
   const { ref, visible } = useReveal();
   const [tiles] = useState(fallbackTiles);
 
-  // 🛠️ FUNÇÃO CORRETORA: Força a abertura no aplicativo nativo se for celular
   const handleInstagramRedirect = (e, webUrl) => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
     if (isMobile) {
       e.preventDefault();
-      // Protocolo universal para abrir direto o perfil do CT dentro do App do Instagram
-      window.location.href = "instagram://user?username=ctpedroalbuquerque";
+      let deepLink = webUrl;
+
+      if (webUrl.includes("/stories/")) {
+        deepLink = webUrl.replace("https://www.instagram.com/", "instagram://");
+        deepLink = deepLink.replace("https://instagram.com/", "instagram://");
+      } else {
+        deepLink = "instagram://user?username=ctpedroalbuquerque";
+      }
+
+      window.location.href = deepLink;
       
-      // Fallback de segurança: Caso o usuário não tenha o app do Instagram instalado,
-      // ele abre o link no navegador após 1.2 segundos.
       setTimeout(() => {
         window.open(webUrl, "_blank", "noopener,noreferrer");
-      }, 1200);
+      }, 1500);
     }
-    // Se for PC, o comportamento do link padrão (href) segue normalmente sem interrupções
   };
 
   return (
@@ -127,29 +142,53 @@ export const Instagram = () => {
             </p>
           </div>
 
+          {/* CAIXA DO INSTAGRAM COM AS INFORMAÇÕES DA BIO */}
           <div className="lg:col-span-5 lg:col-start-8 flex">
             <a
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL)} // Aplicado aqui
+              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL)}
               className="group w-full bg-[#0a0a0b] border border-white/10 p-6 md:p-7 hover:border-[var(--brand-accent)]/50 transition-all flex flex-col justify-between"
             >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <span className="w-11 h-11 rounded-full flex items-center justify-center bg-gradient-to-tr from-[#FFDC80] via-[#E1306C] to-[#833AB4] flex-shrink-0">
-                    <InstagramIcon className="w-5 h-5 text-white" strokeWidth={2.2} />
-                  </span>
-                  <div className="min-w-0">
-                    <div className="text-xs uppercase tracking-[0.2em] text-white/40">
-                      Siga no Instagram
-                    </div>
-                    <div className="text-sm md:text-base font-semibold text-white truncate">
-                      {INSTAGRAM_HANDLE}
+              <div>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="w-11 h-11 rounded-full flex items-center justify-center bg-gradient-to-tr from-[#FFDC80] via-[#E1306C] to-[#833AB4] flex-shrink-0">
+                      <InstagramIcon className="w-5 h-5 text-white" strokeWidth={2.2} />
+                    </span>
+                    <div className="min-w-0">
+                      <div className="text-xs uppercase tracking-[0.2em] text-white/40">
+                        Siga no Instagram
+                      </div>
+                      <div className="text-sm md:text-base font-semibold text-white truncate">
+                        {INSTAGRAM_HANDLE}
+                      </div>
                     </div>
                   </div>
+                  <ArrowUpRight className="w-5 h-5 text-white/30 group-hover:text-[var(--brand-accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
                 </div>
-                <ArrowUpRight className="w-5 h-5 text-white/30 group-hover:text-[var(--brand-accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
+
+                {/* 🎯 SEÇÃO DA BIO ADICIONADA AQUI */}
+                <div className="mt-6 pt-5 border-t border-white/5 space-y-2 text-xs md:text-sm text-white/70 font-medium tracking-wide">
+                  <p className="flex items-center gap-2">
+                    <span>🥊</span> <strong>Centro de Combate de Elite</strong>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span>🔥</span> <span>Boxe • Muay Thai • Kickboxing</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span>⚡</span> <span>Treino Infantil & Aulas Particulares</span>
+                  </p>
+                  <p className="flex items-center gap-2 text-white/50">
+                    <span>📍</span> <span>Rio de Janeiro - RJ</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Linha inferior discreta de chamada para ação */}
+              <div className="mt-6 text-[11px] uppercase tracking-widest text-[var(--brand-accent)] font-bold group-hover:underline">
+                Toque para abrir o perfil completo →
               </div>
             </a>
           </div>
@@ -168,7 +207,7 @@ export const Instagram = () => {
               href={t.link}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => handleInstagramRedirect(e, t.link)} // Aplicado em cada card individual
+              onClick={(e) => handleInstagramRedirect(e, t.link)}
               className={`group relative aspect-square overflow-hidden border transition-all bg-cover bg-center ${
                 t.isStory 
                   ? "border-transparent ring-2 ring-pink-600 ring-offset-2 ring-offset-black animate-pulse" 
@@ -233,7 +272,7 @@ export const Instagram = () => {
               href={INSTAGRAM_URL} 
               target="_blank" 
               rel="noopener noreferrer"
-              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL)} // Aplicado no botão inferior grande
+              onClick={(e) => handleInstagramRedirect(e, INSTAGRAM_URL)}
             >
               <InstagramIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" strokeWidth={2.2} />
               Seguir no Instagram
@@ -244,3 +283,5 @@ export const Instagram = () => {
     </section>
   );
 };
+
+```
