@@ -38,27 +38,27 @@ export const Navbar = () => {
       {/* Main Flex container that holds everything in line */}
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 relative">
         
-        {/* Brand Logo & Stacked Text Container - Scaled up 2x */}
+        {/* Brand Logo & Stacked Text Container - Logo colada ao texto */}
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-4 group min-w-0 self-center md:self-start md:pt-2"
+          className="flex items-center gap-1 group min-w-0 self-center md:self-start md:pt-2"
           onClick={() => setMenuOpen(false)}
         >
           {/* Accent Bar - Made taller to match 2x layout */}
           <span className="h-14 sm:h-16 w-1.5 bg-[var(--brand-accent)] block group-hover:h-20 transition-all flex-shrink-0" />
           
-          {/* Image Logo - Doubled Size */}
+          {/* Image Logo - Tamanho grande mantido */}
           <img 
             src="/pedro_albuquerque_logo.png" 
             alt="CT Pedro Albuquerque Logo" 
-            className="h-28 sm:h-32 md:h-40 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+            className="h-28 sm:h-32 md:h-40 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex-shrink-0"
           />
 
-          {/* Stacked Branding Text Block - Doubled Font Sizes */}
+          {/* Stacked Branding Text Block - Atualizado com o novo texto */}
           <div className="flex flex-col font-display uppercase tracking-tight leading-[1.05] text-left select-none">
-            <span className="text-white text-lg sm:text-xl font-light">
-              CT
+            <span className="text-white text-[10px] sm:text-xs font-light tracking-normal whitespace-nowrap">
+              Centro de Combate de Elite
             </span>
             <span className="text-[var(--brand-accent)] text-xl sm:text-2xl font-bold">
               Pedro
