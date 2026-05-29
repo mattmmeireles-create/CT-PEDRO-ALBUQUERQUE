@@ -7,51 +7,52 @@ export const INSTAGRAM_URL = "https://www.instagram.com/ctpedroalbuquerque";
 export const INSTAGRAM_HANDLE = "@ctpedroalbuquerque";
 
 const fallbackTiles = [
-  { 
-    label: "Story Ativo", 
-    subtitle: "Assista Agora", 
-    gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)", 
+  {
+    label: "Story Ativo",
+    subtitle: "Assista Agora",
+    gradient: "linear-gradient(135deg, #2a0a0f 0%, #ff1744 100%)",
     pattern: "diagonal",
-    instagramImage: "https://images.unsplash.com/photo-1552072092-7f9b8d63efcb?q=80&w=600&auto=format&fit=crop", 
+    instagramImage: "https://images.unsplash.com/photo-1552072092-7f9b8d63efcb?q=80&w=600&auto=format&fit=crop",
     isStory: true,
-    link: "https://www.instagram.com/stories/ctpedroalbuquerque/"
+    link: "https://www.instagram.com/stories/ctpedroalbuquerque/",           // fallback web
+    mobileLink: "instagram://stories/ctpedroalbuquerque"                    // deep link app
   },
-  { 
-    label: "Boxe", 
-    subtitle: "Ver Destaque", 
-    gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)", 
+  {
+    label: "Boxe",
+    subtitle: "Ver Destaque",
+    gradient: "linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)",
     pattern: "dots",
     instagramImage: "/boxe.jpg",
     link: "https://www.instagram.com/stories/highlights/18163021822156721/"
   },
-  { 
-    label: "Kickboxing", 
-    subtitle: "Ver Destaque", 
-    gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)", 
+  {
+    label: "Kickboxing",
+    subtitle: "Ver Destaque",
+    gradient: "linear-gradient(135deg, #ff1744 0%, #7a0019 100%)",
     pattern: "stripes",
     instagramImage: "/kickboxing.jpg",
     link: "https://www.instagram.com/stories/highlights/17998922896344326/"
   },
-  { 
-    label: "Muay Thai", 
-    subtitle: "Ver Destaque", 
-    gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)", 
+  {
+    label: "Muay Thai",
+    subtitle: "Ver Destaque",
+    gradient: "linear-gradient(135deg, #0a0a0b 0%, #ff1744 130%)",
     pattern: "grid",
     instagramImage: "/muay-thai.jpg",
     link: "https://www.instagram.com/stories/highlights/17874789905399344/"
   },
-  { 
-    label: "Treino Infantil", 
-    subtitle: "Ver Destaque", 
-    gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)", 
+  {
+    label: "Treino Infantil",
+    subtitle: "Ver Destaque",
+    gradient: "linear-gradient(135deg, #1a1a1a 0%, #ff3d62 130%)",
     pattern: "diagonal",
     instagramImage: "/treino-infantil.jpg",
     link: "https://www.instagram.com/stories/highlights/18217137670074358/"
   },
-  { 
-    label: "Aula Particular", 
-    subtitle: "Ver Destaque", 
-    gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)", 
+  {
+    label: "Aula Particular",
+    subtitle: "Ver Destaque",
+    gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)",
     pattern: "stripes",
     instagramImage: "/Aula Particular.jpeg",
     link: "https://www.instagram.com/stories/highlights/17853664847565155/"
@@ -70,10 +71,21 @@ export const Instagram = () => {
   const [tiles] = useState(fallbackTiles);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detecta se o usuário está no celular para aplicar o comportamento correto de abas
   useEffect(() => {
     setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
   }, []);
+
+  const handleTileClick = (t, e) => {
+    if (t.isStory && isMobile) {
+      // Tenta abrir diretamente no app do Instagram
+      window.location.href = t.mobileLink || "instagram://stories/ctpedroalbuquerque";
+
+      // Fallback caso o app não esteja instalado ou não abra
+      setTimeout(() => {
+        window.open(t.link, "_blank");
+      }, 700);
+    }
+  };
 
   return (
     <section
@@ -92,6 +104,7 @@ export const Instagram = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-5 md:px-10">
+        {/* Header */}
         <div
           className={`grid lg:grid-cols-12 gap-8 lg:gap-12 mb-10 md:mb-14 transition-all duration-1000 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -115,13 +128,15 @@ export const Instagram = () => {
             </p>
           </div>
 
+          {/* Card Instagram */}
           <div className="lg:col-span-5 lg:col-start-8 flex">
             <a
               href={INSTAGRAM_URL}
-              target={isMobile ? "_self" : "_blank"} // Correção de aba para celular
+              target={isMobile ? "_self" : "_blank"}
               rel="noopener noreferrer"
               className="group w-full bg-[#0a0a0b] border border-white/10 p-6 md:p-7 hover:border-[var(--brand-accent)]/50 transition-all flex flex-col justify-between"
             >
+              {/* ... (mantido igual) */}
               <div>
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
@@ -139,8 +154,6 @@ export const Instagram = () => {
                   </div>
                   <ArrowUpRight className="w-5 h-5 text-white/30 group-hover:text-[var(--brand-accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
                 </div>
-
-                {/* Seção da Bio do Instagram mantida e protegida */}
                 <div className="mt-6 pt-5 border-t border-white/5 space-y-2 text-xs md:text-sm text-white/70 font-medium tracking-wide">
                   <p className="flex items-center gap-2">
                     <span>🥊</span> <strong>Centro de Combate de Elite</strong>
@@ -156,7 +169,6 @@ export const Instagram = () => {
                   </p>
                 </div>
               </div>
-
               <div className="mt-6 text-[11px] uppercase tracking-widest text-[var(--brand-accent)] font-bold group-hover:underline">
                 Toque para abrir o perfil completo →
               </div>
@@ -164,6 +176,7 @@ export const Instagram = () => {
           </div>
         </div>
 
+        {/* Tiles Grid */}
         <div
           className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 transition-all duration-1000 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -173,16 +186,17 @@ export const Instagram = () => {
           {tiles.map((t, idx) => (
             <a
               key={idx}
-              href={t.link}
-              target={isMobile ? "_self" : "_blank"} // O GRANDE SEGREDO: Abre no próprio app se for mobile
+              href={isMobile && t.isStory ? t.mobileLink : t.link}
+              target={isMobile ? "_self" : "_blank"}
               rel="noopener noreferrer"
+              onClick={(e) => handleTileClick(t, e)}
               className={`group relative aspect-square overflow-hidden border transition-all bg-cover bg-center ${
-                t.isStory 
-                  ? "border-transparent ring-2 ring-pink-600 ring-offset-2 ring-offset-black animate-pulse" 
+                t.isStory
+                  ? "border-transparent ring-2 ring-pink-600 ring-offset-4 ring-offset-black animate-pulse"
                   : "border-white/5 hover:border-[var(--brand-accent)]/40"
               }`}
-              style={{ 
-                backgroundImage: t.instagramImage ? `url(${t.instagramImage})` : t.gradient 
+              style={{
+                backgroundImage: t.instagramImage ? `url(${t.instagramImage})` : t.gradient,
               }}
             >
               {t.instagramImage && (
@@ -193,7 +207,7 @@ export const Instagram = () => {
                 className="absolute inset-0 mix-blend-overlay z-10"
                 style={{ background: Patterns[t.pattern] }}
               />
-              
+
               <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-between z-20">
                 <div className="flex items-start justify-between">
                   <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-white font-semibold shadow-sm">
@@ -223,6 +237,7 @@ export const Instagram = () => {
           ))}
         </div>
 
+        {/* Footer */}
         <div
           className={`mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-between gap-5 transition-all duration-1000 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -236,9 +251,9 @@ export const Instagram = () => {
             asChild
             className="bg-gradient-to-tr from-[#F77737] via-[#E1306C] to-[#833AB4] hover:brightness-110 text-white font-bold uppercase tracking-[0.15em] text-xs md:text-sm rounded-none h-12 md:h-14 px-7 md:px-9 border-0 transition-all w-full sm:w-auto"
           >
-            <a 
-              href={INSTAGRAM_URL} 
-              target={isMobile ? "_self" : "_blank"} // Correção de aba para celular no botão grande
+            <a
+              href={INSTAGRAM_URL}
+              target={isMobile ? "_self" : "_blank"}
               rel="noopener noreferrer"
             >
               <InstagramIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" strokeWidth={2.2} />
