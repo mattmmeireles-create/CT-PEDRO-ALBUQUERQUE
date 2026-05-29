@@ -14,7 +14,6 @@ export const Navbar = () => {
     const onScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Se o menu mobile estiver aberto, NÃO esconde a navbar ao rolar a página por trás
       if (menuOpen) return;
 
       if (Math.abs(currentScrollY - lastScrollY) < 10) return;
@@ -31,9 +30,8 @@ export const Navbar = () => {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [menuOpen]); // Recalcula corretamente quando o menu muda de estado
+  }, [menuOpen]);
 
-  // Trava o scroll do body quando o menu mobile está aberto
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
@@ -47,7 +45,6 @@ export const Navbar = () => {
 
   const scrollToId = (id) => {
     setMenuOpen(false);
-    // Timeout leve para esperar o menu fechar antes de rolar suavemente
     setTimeout(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     }, 150);
@@ -61,36 +58,35 @@ export const Navbar = () => {
           ? "bg-black/90 backdrop-blur-md border-b border-white/5 shadow-xl"
           : "bg-transparent"
       } ${
-        // Se o menu estiver aberto, a Navbar DEVE ficar visível (translate-y-0)
         visible || menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
       }`}
     >
       {/* Main Flex container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 relative">
         
-        {/* Brand Logo & Stacked Text Container - CORRIGIDO O ALINHAMENTO VERTICAL */}
+        {/* Brand Logo & Stacked Text Container - MAIOR E DESLOCADO PARA BAIXO */}
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-2 group min-w-0 transition-all duration-300" 
+          className="flex items-center gap-2 group min-w-0 transition-all duration-300 transform translate-y-4 sm:translate-y-6 md:translate-y-8" 
           onClick={() => setMenuOpen(false)}
         >
-          {/* Accent Bar */}
-          <span className="h-10 sm:h-12 w-1.5 bg-[var(--brand-accent)] block group-hover:h-14 transition-all flex-shrink-0" />
+          {/* Accent Bar - Aumentada proporcionalmente */}
+          <span className="h-12 sm:h-16 w-2 bg-[var(--brand-accent)] block group-hover:h-20 transition-all flex-shrink-0" />
           
-          {/* Image Logo */}
+          {/* Image Logo - AUMENTADA SIGNIFICATIVAMENTE */}
           <img 
             src="/CT_pedro.png" 
             alt="CT Pedro Albuquerque Logo" 
-            className="h-12 sm:h-16 md:h-20 w-auto object-contain drop-shadow-[0_6px_16px_rgba(0,0,0,0.6)] flex-shrink-0"
+            className="h-16 sm:h-24 md:h-32 w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.7)] flex-shrink-0"
           />
 
-          {/* Bloco de Texto */}
-          <div className="flex flex-col font-display uppercase tracking-tighter italic leading-[0.9] text-left select-none pl-1 justify-center">
-            <span className="text-white text-base sm:text-lg md:text-xl font-black">
+          {/* Bloco de Texto - TEXTOS MAIORES */}
+          <div className="flex flex-col font-display uppercase tracking-tighter italic leading-[0.85] text-left select-none pl-1 justify-center">
+            <span className="text-white text-lg sm:text-2xl md:text-3xl font-black">
               CT
             </span>
-            <span className="text-red-600 text-lg sm:text-xl md:text-2xl font-black whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            <span className="text-red-600 text-xl sm:text-3xl md:text-4xl font-black whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">
               Pedro Albuquerque
             </span>
           </div>
@@ -137,7 +133,6 @@ export const Navbar = () => {
             <span className="sm:hidden">Grátis</span>
           </Button>
 
-          {/* Botão de três barras modificado para garantir o clique limpo */}
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
             data-testid="nav-mobile-toggle"
