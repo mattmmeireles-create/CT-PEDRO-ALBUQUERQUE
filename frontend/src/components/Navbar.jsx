@@ -53,9 +53,9 @@ export const Navbar = () => {
   return (
     <header
       data-testid="site-navbar"
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-[transform,opacity,background-color] duration-500 ease-in-out ${
         scrolled || menuOpen
-          ? "bg-black/90 backdrop-blur-md border-b border-white/5 shadow-xl"
+          ? "bg-black/90 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
           : "bg-transparent"
       } ${
         visible || menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
@@ -64,24 +64,25 @@ export const Navbar = () => {
       {/* Main Flex container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 relative">
         
-        {/* Brand Logo & Stacked Text Container - MAIOR E DESLOCADO PARA BAIXO */}
+        {/* Brand Logo & Stacked Text Container - ABAIXADO EXTRA NO MOBILE */}
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-2 group min-w-0 transition-all duration-300 transform translate-y-4 sm:translate-y-6 md:translate-y-8" 
+          // SOLUÇÃO: 'translate-y-7' joga bem para baixo no mobile, 'md:translate-y-8' preserva o desktop.
+          className="flex items-center gap-2 group min-w-0 transition-[transform,opacity] duration-300 transform translate-y-7 md:translate-y-8" 
           onClick={() => setMenuOpen(false)}
         >
-          {/* Accent Bar - Aumentada proporcionalmente */}
+          {/* Accent Bar */}
           <span className="h-12 sm:h-16 w-2 bg-[var(--brand-accent)] block group-hover:h-20 transition-all flex-shrink-0" />
           
-          {/* Image Logo - AUMENTADA SIGNIFICATIVAMENTE */}
+          {/* Image Logo */}
           <img 
             src="/CT_pedro.png" 
             alt="CT Pedro Albuquerque Logo" 
             className="h-16 sm:h-24 md:h-32 w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.7)] flex-shrink-0"
           />
 
-          {/* Bloco de Texto - TEXTOS MAIORES */}
+          {/* Bloco de Texto */}
           <div className="flex flex-col font-display uppercase tracking-tighter italic leading-[0.85] text-left select-none pl-1 justify-center">
             <span className="text-white text-lg sm:text-2xl md:text-3xl font-black">
               CT
