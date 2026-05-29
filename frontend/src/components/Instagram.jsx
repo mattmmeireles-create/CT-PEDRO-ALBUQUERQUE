@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Instagram as InstagramIcon, ArrowUpRight } from "lucide-react";
 import { Button } from "./ui/button";
 import useReveal from "../hooks/useReveal";
@@ -68,6 +68,12 @@ const Patterns = {
 export const Instagram = () => {
   const { ref, visible } = useReveal();
   const [tiles] = useState(fallbackTiles);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detecta se o usuário está no celular para aplicar o comportamento correto de abas
+  useEffect(() => {
+    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+  }, []);
 
   return (
     <section
@@ -112,7 +118,7 @@ export const Instagram = () => {
           <div className="lg:col-span-5 lg:col-start-8 flex">
             <a
               href={INSTAGRAM_URL}
-              target="_blank"
+              target={isMobile ? "_self" : "_blank"} // Correção de aba para celular
               rel="noopener noreferrer"
               className="group w-full bg-[#0a0a0b] border border-white/10 p-6 md:p-7 hover:border-[var(--brand-accent)]/50 transition-all flex flex-col justify-between"
             >
@@ -134,6 +140,7 @@ export const Instagram = () => {
                   <ArrowUpRight className="w-5 h-5 text-white/30 group-hover:text-[var(--brand-accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
                 </div>
 
+                {/* Seção da Bio do Instagram mantida e protegida */}
                 <div className="mt-6 pt-5 border-t border-white/5 space-y-2 text-xs md:text-sm text-white/70 font-medium tracking-wide">
                   <p className="flex items-center gap-2">
                     <span>🥊</span> <strong>Centro de Combate de Elite</strong>
@@ -167,7 +174,7 @@ export const Instagram = () => {
             <a
               key={idx}
               href={t.link}
-              target="_blank"
+              target={isMobile ? "_self" : "_blank"} // O GRANDE SEGREDO: Abre no próprio app se for mobile
               rel="noopener noreferrer"
               className={`group relative aspect-square overflow-hidden border transition-all bg-cover bg-center ${
                 t.isStory 
@@ -231,7 +238,7 @@ export const Instagram = () => {
           >
             <a 
               href={INSTAGRAM_URL} 
-              target="_blank" 
+              target={isMobile ? "_self" : "_blank"} // Correção de aba para celular no botão grande
               rel="noopener noreferrer"
             >
               <InstagramIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" strokeWidth={2.2} />
