@@ -54,7 +54,7 @@ const fallbackTiles = [
     subtitle: "Ver Destaque",
     gradient: "linear-gradient(135deg, #ff1744 0%, #1a1a1a 100%)",
     pattern: "stripes",
-    instagramImage: "/Aula Particular.jpeg",
+    instagramImage: "/Aula_Particular.jpeg",
     link: "https://www.instagram.com/stories/highlights/17853664847565155/"
   },
 ];
