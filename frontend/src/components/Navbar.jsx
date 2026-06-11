@@ -43,7 +43,6 @@ export const Navbar = () => {
     };
   }, [menuOpen]);
 
-  // FUNÇÃO CORRIGIDA: Rola direto sem o delay que causava falha no clique
   const scrollToId = (id) => {
     setMenuOpen(false);
     const element = document.getElementById(id);
@@ -66,52 +65,55 @@ export const Navbar = () => {
       {/* Main Flex container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 relative">
         
-        {/* Brand Logo & Stacked Text Container - ABAIXADO EXTRA NO MOBILE */}
+        {/* CORREÇÃO DO LOGO: Removeu o translate do container para não cobrir os botões laterais */}
         <a
           href="#top"
           data-testid="brand-logo"
-          className="flex items-center gap-2 group min-w-0 transition-[transform,opacity] duration-300 transform translate-y-7 md:translate-y-8" 
+          className="flex items-center gap-2 group min-w-0 h-full relative" 
           onClick={() => setMenuOpen(false)}
         >
-          {/* Accent Bar */}
-          <span className="h-12 sm:h-16 w-2 bg-[var(--brand-accent)] block group-hover:h-20 transition-all flex-shrink-0" />
-          
-          {/* Image Logo */}
-          <img 
-            src="/CT_pedro.png" 
-            alt="CT Pedro Albuquerque Logo" 
-            className="h-16 sm:h-24 md:h-32 w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.7)] flex-shrink-0"
-          />
+          {/* SOLUÇÃO INTERNA: O translate foi aplicado individualmente nos elementos internos, deixando a área de clique limpa */}
+          <div className="flex items-center gap-2 transform translate-y-7 md:translate-y-8 pointer-events-auto">
+            {/* Accent Bar */}
+            <span className="h-12 sm:h-16 w-2 bg-[var(--brand-accent)] block group-hover:h-20 transition-all flex-shrink-0" />
+            
+            {/* Image Logo */}
+            <img 
+              src="/CT_pedro.png" 
+              alt="CT Pedro Albuquerque Logo" 
+              className="h-16 sm:h-24 md:h-32 w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.7)] flex-shrink-0"
+            />
 
-          {/* Bloco de Texto */}
-          <div className="flex flex-col font-display uppercase tracking-tighter italic leading-[0.85] text-left select-none pl-1 justify-center">
-            <span className="text-white text-lg sm:text-2xl md:text-3xl font-black">
-              CT
-            </span>
-            <span className="text-red-600 text-xl sm:text-3xl md:text-4xl font-black whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">
-              Pedro Albuquerque
-            </span>
+            {/* Bloco de Texto */}
+            <div className="flex flex-col font-display uppercase tracking-tighter italic leading-[0.85] text-left select-none pl-1 justify-center">
+              <span className="text-white text-lg sm:text-2xl md:text-3xl font-black">
+                CT
+              </span>
+              <span className="text-red-600 text-xl sm:text-3xl md:text-4xl font-black whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">
+                Pedro Albuquerque
+              </span>
+            </div>
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-[0.18em] text-white/70 font-medium">
-          <button onClick={() => scrollToId("modalidades")} className="hover:text-white transition-colors" data-testid="nav-modalities">
+        {/* CORREÇÃO DA NAV: Adicionado z-10 e pointer-events para garantir prioridade de clique e hover */}
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-[0.18em] text-white/70 font-medium z-10 relative pointer-events-auto">
+          <button onClick={() => scrollToId("modalidades")} className="hover:text-white transition-colors py-2 cursor-pointer" data-testid="nav-modalities">
             Modalidades
           </button>
-          <button onClick={() => scrollToId("autoridade")} className="hover:text-white transition-colors" data-testid="nav-authority">
+          <button onClick={() => scrollToId("autoridade")} className="hover:text-white transition-colors py-2 cursor-pointer" data-testid="nav-authority">
             Autoridade
           </button>
-          <button onClick={() => scrollToId("instagram")} className="hover:text-white transition-colors" data-testid="nav-instagram-link">
+          <button onClick={() => scrollToId("instagram")} className="hover:text-white transition-colors py-2 cursor-pointer" data-testid="nav-instagram-link">
             Instagram
           </button>
-          <button onClick={() => scrollToId("depoimentos")} className="hover:text-white transition-colors" data-testid="nav-testimonials">
+          <button onClick={() => scrollToId("depoimentos")} className="hover:text-white transition-colors py-2 cursor-pointer" data-testid="nav-testimonials">
             Depoimentos
           </button>
         </nav>
 
         {/* Action Buttons & Hamburger Menu */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 z-10">
           <a
             href={INSTAGRAM_URL}
             target="_blank"
