@@ -43,11 +43,13 @@ export const Navbar = () => {
     };
   }, [menuOpen]);
 
+  // FUNÇÃO CORRIGIDA: Rola direto sem o delay que causava falha no clique
   const scrollToId = (id) => {
     setMenuOpen(false);
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }, 150);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -68,7 +70,6 @@ export const Navbar = () => {
         <a
           href="#top"
           data-testid="brand-logo"
-          // SOLUÇÃO: 'translate-y-7' joga bem para baixo no mobile, 'md:translate-y-8' preserva o desktop.
           className="flex items-center gap-2 group min-w-0 transition-[transform,opacity] duration-300 transform translate-y-7 md:translate-y-8" 
           onClick={() => setMenuOpen(false)}
         >
